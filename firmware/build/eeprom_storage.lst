@@ -1,0 +1,261 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.0 #15242 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module eeprom_storage
+                                      6 	
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _eeprom_write
+                                     12 	.globl _eeprom_read
+                                     13 	.globl _eeprom_settings_save_PARM_2
+                                     14 	.globl _eeprom_settings_load_PARM_2
+                                     15 	.globl _eeprom_settings_load
+                                     16 	.globl _eeprom_settings_save
+                                     17 ;--------------------------------------------------------
+                                     18 ; special function registers
+                                     19 ;--------------------------------------------------------
+                                     20 	.area RSEG    (ABS,DATA)
+      000000                         21 	.org 0x0000
+                                     22 ;--------------------------------------------------------
+                                     23 ; special function bits
+                                     24 ;--------------------------------------------------------
+                                     25 	.area RSEG    (ABS,DATA)
+      000000                         26 	.org 0x0000
+                                     27 ;--------------------------------------------------------
+                                     28 ; overlayable register banks
+                                     29 ;--------------------------------------------------------
+                                     30 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                         31 	.ds 8
+                                     32 ;--------------------------------------------------------
+                                     33 ; internal ram data
+                                     34 ;--------------------------------------------------------
+                                     35 	.area DSEG    (DATA)
+      000000                         36 _eeprom_settings_load_PARM_2:
+      000000                         37 	.ds 2
+      000002                         38 _eeprom_settings_load_header_10000_8:
+      000002                         39 	.ds 4
+      000006                         40 _eeprom_settings_save_PARM_2:
+      000006                         41 	.ds 2
+      000008                         42 _eeprom_settings_save_header_10000_11:
+      000008                         43 	.ds 4
+                                     44 ;--------------------------------------------------------
+                                     45 ; overlayable items in internal ram
+                                     46 ;--------------------------------------------------------
+                                     47 ;--------------------------------------------------------
+                                     48 ; indirectly addressable internal ram data
+                                     49 ;--------------------------------------------------------
+                                     50 	.area ISEG    (DATA)
+                                     51 ;--------------------------------------------------------
+                                     52 ; absolute internal ram data
+                                     53 ;--------------------------------------------------------
+                                     54 	.area IABS    (ABS,DATA)
+                                     55 	.area IABS    (ABS,DATA)
+                                     56 ;--------------------------------------------------------
+                                     57 ; bit data
+                                     58 ;--------------------------------------------------------
+                                     59 	.area BSEG    (BIT)
+                                     60 ;--------------------------------------------------------
+                                     61 ; paged external ram data
+                                     62 ;--------------------------------------------------------
+                                     63 	.area PSEG    (PAG,XDATA)
+                                     64 ;--------------------------------------------------------
+                                     65 ; uninitialized external ram data
+                                     66 ;--------------------------------------------------------
+                                     67 	.area XSEG    (XDATA)
+                                     68 ;--------------------------------------------------------
+                                     69 ; absolute external ram data
+                                     70 ;--------------------------------------------------------
+                                     71 	.area XABS    (ABS,XDATA)
+                                     72 ;--------------------------------------------------------
+                                     73 ; initialized external ram data
+                                     74 ;--------------------------------------------------------
+                                     75 	.area XISEG   (XDATA)
+                                     76 	.area HOME    (CODE)
+                                     77 	.area GSINIT0 (CODE)
+                                     78 	.area GSINIT1 (CODE)
+                                     79 	.area GSINIT2 (CODE)
+                                     80 	.area GSINIT3 (CODE)
+                                     81 	.area GSINIT4 (CODE)
+                                     82 	.area GSINIT5 (CODE)
+                                     83 	.area GSINIT  (CODE)
+                                     84 	.area GSFINAL (CODE)
+                                     85 	.area CSEG    (CODE)
+                                     86 ;--------------------------------------------------------
+                                     87 ; global & static initialisations
+                                     88 ;--------------------------------------------------------
+                                     89 	.area HOME    (CODE)
+                                     90 	.area GSINIT  (CODE)
+                                     91 	.area GSFINAL (CODE)
+                                     92 	.area GSINIT  (CODE)
+                                     93 ;--------------------------------------------------------
+                                     94 ; Home
+                                     95 ;--------------------------------------------------------
+                                     96 	.area HOME    (CODE)
+                                     97 	.area HOME    (CODE)
+                                     98 ;--------------------------------------------------------
+                                     99 ; code
+                                    100 ;--------------------------------------------------------
+                                    101 	.area CSEG    (CODE)
+                                    102 ;------------------------------------------------------------
+                                    103 ;Allocation info for local variables in function 'eeprom_settings_load'
+                                    104 ;------------------------------------------------------------
+                                    105 ;buffer_size_words Allocated with name '_eeprom_settings_load_PARM_2'
+                                    106 ;reg_buffer    Allocated to registers r5 r6 r7 
+                                    107 ;header        Allocated with name '_eeprom_settings_load_header_10000_8'
+                                    108 ;------------------------------------------------------------
+                                    109 ;	build/../eeprom_storage.c:4: eeprom_err_t eeprom_settings_load(uint32_t* reg_buffer, uint16_t buffer_size_words) {
+                                    110 ;	-----------------------------------------
+                                    111 ;	 function eeprom_settings_load
+                                    112 ;	-----------------------------------------
+      000000                        113 _eeprom_settings_load:
+                           000007   114 	ar7 = 0x07
+                           000006   115 	ar6 = 0x06
+                           000005   116 	ar5 = 0x05
+                           000004   117 	ar4 = 0x04
+                           000003   118 	ar3 = 0x03
+                           000002   119 	ar2 = 0x02
+                           000001   120 	ar1 = 0x01
+                           000000   121 	ar0 = 0x00
+      000000 AD 82            [24]  122 	mov	r5, dpl
+      000002 AE 83            [24]  123 	mov	r6, dph
+      000004 AF F0            [24]  124 	mov	r7, b
+                                    125 ;	build/../eeprom_storage.c:7: if (reg_buffer == NULL) return EEPROM_ERR_NO_VALID_DATA;
+      000006 ED               [12]  126 	mov	a,r5
+      000007 4E               [12]  127 	orl	a,r6
+      000008 70 04            [24]  128 	jnz	00102$
+      00000A 75 82 01         [24]  129 	mov	dpl, #0x01
+      00000D 22               [24]  130 	ret
+      00000E                        131 00102$:
+                                    132 ;	build/../eeprom_storage.c:9: eeprom_read(EEPROM_I2C_ADDR, EEPROM_HEADER_ADDR, 4, (uint8_t __xdata *)&header);
+      00000E 75*00r02         [24]  133 	mov	_eeprom_read_PARM_4,#_eeprom_settings_load_header_10000_8
+      000011 75*01 00         [24]  134 	mov	(_eeprom_read_PARM_4 + 1),#0x00
+      000014 75*02 40         [24]  135 	mov	(_eeprom_read_PARM_4 + 2),#0x40
+      000017 75*00 00         [24]  136 	mov	_eeprom_read_PARM_2,#0x00
+      00001A 75*01 3F         [24]  137 	mov	(_eeprom_read_PARM_2 + 1),#0x3f
+      00001D 75*00 04         [24]  138 	mov	_eeprom_read_PARM_3,#0x04
+      000020 75*01 00         [24]  139 	mov	(_eeprom_read_PARM_3 + 1),#0x00
+      000023 75 82 51         [24]  140 	mov	dpl, #0x51
+      000026 C0 07            [24]  141 	push	ar7
+      000028 C0 06            [24]  142 	push	ar6
+      00002A C0 05            [24]  143 	push	ar5
+      00002C 12r00r00         [24]  144 	lcall	_eeprom_read
+      00002F D0 05            [24]  145 	pop	ar5
+      000031 D0 06            [24]  146 	pop	ar6
+      000033 D0 07            [24]  147 	pop	ar7
+                                    148 ;	build/../eeprom_storage.c:11: if (header != EEPROM_SETTINGS_HEADER) {
+      000035 74 BA            [12]  149 	mov	a,#0xba
+      000037 B5*02 11         [24]  150 	cjne	a,_eeprom_settings_load_header_10000_8,00120$
+      00003A 74 0C            [12]  151 	mov	a,#0x0c
+      00003C B5*03 0C         [24]  152 	cjne	a,(_eeprom_settings_load_header_10000_8 + 1),00120$
+      00003F 74 C0            [12]  153 	mov	a,#0xc0
+      000041 B5*04 07         [24]  154 	cjne	a,(_eeprom_settings_load_header_10000_8 + 2),00120$
+      000044 74 AB            [12]  155 	mov	a,#0xab
+      000046 B5*05 02         [24]  156 	cjne	a,(_eeprom_settings_load_header_10000_8 + 3),00120$
+      000049 80 04            [24]  157 	sjmp	00104$
+      00004B                        158 00120$:
+                                    159 ;	build/../eeprom_storage.c:12: return EEPROM_ERR_NO_VALID_DATA;
+      00004B 75 82 01         [24]  160 	mov	dpl, #0x01
+      00004E 22               [24]  161 	ret
+      00004F                        162 00104$:
+                                    163 ;	build/../eeprom_storage.c:16: buffer_size_words * 4U, (uint8_t __xdata *)reg_buffer);
+      00004F AB*00            [24]  164 	mov	r3,_eeprom_settings_load_PARM_2
+      000051 AC*01            [24]  165 	mov	r4,(_eeprom_settings_load_PARM_2 + 1)
+      000053 EB               [12]  166 	mov	a,r3
+      000054 2B               [12]  167 	add	a,r3
+      000055 F5*00            [12]  168 	mov	_eeprom_read_PARM_3,a
+      000057 EC               [12]  169 	mov	a,r4
+      000058 33               [12]  170 	rlc	a
+      000059 F5*01            [12]  171 	mov	(_eeprom_read_PARM_3 + 1),a
+      00005B E5*00            [12]  172 	mov	a,_eeprom_read_PARM_3
+      00005D 25*00            [12]  173 	add	a,_eeprom_read_PARM_3
+      00005F F5*00            [12]  174 	mov	_eeprom_read_PARM_3,a
+      000061 E5*01            [12]  175 	mov	a,(_eeprom_read_PARM_3 + 1)
+      000063 33               [12]  176 	rlc	a
+      000064 F5*01            [12]  177 	mov	(_eeprom_read_PARM_3 + 1),a
+      000066 8D*00            [24]  178 	mov	_eeprom_read_PARM_4,r5
+      000068 8E*01            [24]  179 	mov	(_eeprom_read_PARM_4 + 1),r6
+      00006A 8F*02            [24]  180 	mov	(_eeprom_read_PARM_4 + 2),r7
+      00006C 75*00 04         [24]  181 	mov	_eeprom_read_PARM_2,#0x04
+      00006F 75*01 3F         [24]  182 	mov	(_eeprom_read_PARM_2 + 1),#0x3f
+      000072 75 82 51         [24]  183 	mov	dpl, #0x51
+      000075 12r00r00         [24]  184 	lcall	_eeprom_read
+                                    185 ;	build/../eeprom_storage.c:18: return EEPROM_OK;
+      000078 75 82 00         [24]  186 	mov	dpl, #0x00
+                                    187 ;	build/../eeprom_storage.c:19: }
+      00007B 22               [24]  188 	ret
+                                    189 ;------------------------------------------------------------
+                                    190 ;Allocation info for local variables in function 'eeprom_settings_save'
+                                    191 ;------------------------------------------------------------
+                                    192 ;buffer_size_words Allocated with name '_eeprom_settings_save_PARM_2'
+                                    193 ;reg_buffer    Allocated to registers r5 r6 r7 
+                                    194 ;header        Allocated with name '_eeprom_settings_save_header_10000_11'
+                                    195 ;------------------------------------------------------------
+                                    196 ;	build/../eeprom_storage.c:21: eeprom_err_t eeprom_settings_save(const uint32_t* reg_buffer, uint16_t buffer_size_words) {
+                                    197 ;	-----------------------------------------
+                                    198 ;	 function eeprom_settings_save
+                                    199 ;	-----------------------------------------
+      00007C                        200 _eeprom_settings_save:
+      00007C AD 82            [24]  201 	mov	r5, dpl
+      00007E AE 83            [24]  202 	mov	r6, dph
+      000080 AF F0            [24]  203 	mov	r7, b
+                                    204 ;	build/../eeprom_storage.c:22: uint32_t header = EEPROM_SETTINGS_HEADER;
+      000082 75*08 BA         [24]  205 	mov	_eeprom_settings_save_header_10000_11,#0xba
+      000085 75*09 0C         [24]  206 	mov	(_eeprom_settings_save_header_10000_11 + 1),#0x0c
+      000088 75*0A C0         [24]  207 	mov	(_eeprom_settings_save_header_10000_11 + 2),#0xc0
+      00008B 75*0B AB         [24]  208 	mov	(_eeprom_settings_save_header_10000_11 + 3),#0xab
+                                    209 ;	build/../eeprom_storage.c:24: if (reg_buffer == NULL) return EEPROM_ERR_NO_VALID_DATA;
+      00008E ED               [12]  210 	mov	a,r5
+      00008F 4E               [12]  211 	orl	a,r6
+      000090 70 04            [24]  212 	jnz	00102$
+      000092 75 82 01         [24]  213 	mov	dpl, #0x01
+      000095 22               [24]  214 	ret
+      000096                        215 00102$:
+                                    216 ;	build/../eeprom_storage.c:26: eeprom_write(EEPROM_I2C_ADDR, EEPROM_HEADER_ADDR, 4, (uint8_t __xdata *)&header);
+      000096 75*00r08         [24]  217 	mov	_eeprom_write_PARM_4,#_eeprom_settings_save_header_10000_11
+      000099 75*01 00         [24]  218 	mov	(_eeprom_write_PARM_4 + 1),#0x00
+      00009C 75*02 40         [24]  219 	mov	(_eeprom_write_PARM_4 + 2),#0x40
+      00009F 75*00 00         [24]  220 	mov	_eeprom_write_PARM_2,#0x00
+      0000A2 75*01 3F         [24]  221 	mov	(_eeprom_write_PARM_2 + 1),#0x3f
+      0000A5 75*00 04         [24]  222 	mov	_eeprom_write_PARM_3,#0x04
+      0000A8 75*01 00         [24]  223 	mov	(_eeprom_write_PARM_3 + 1),#0x00
+      0000AB 75 82 51         [24]  224 	mov	dpl, #0x51
+      0000AE C0 07            [24]  225 	push	ar7
+      0000B0 C0 06            [24]  226 	push	ar6
+      0000B2 C0 05            [24]  227 	push	ar5
+      0000B4 12r00r00         [24]  228 	lcall	_eeprom_write
+      0000B7 D0 05            [24]  229 	pop	ar5
+      0000B9 D0 06            [24]  230 	pop	ar6
+      0000BB D0 07            [24]  231 	pop	ar7
+                                    232 ;	build/../eeprom_storage.c:28: buffer_size_words * 4U, (uint8_t __xdata *)reg_buffer);
+      0000BD AB*06            [24]  233 	mov	r3,_eeprom_settings_save_PARM_2
+      0000BF AC*07            [24]  234 	mov	r4,(_eeprom_settings_save_PARM_2 + 1)
+      0000C1 EB               [12]  235 	mov	a,r3
+      0000C2 2B               [12]  236 	add	a,r3
+      0000C3 F5*00            [12]  237 	mov	_eeprom_write_PARM_3,a
+      0000C5 EC               [12]  238 	mov	a,r4
+      0000C6 33               [12]  239 	rlc	a
+      0000C7 F5*01            [12]  240 	mov	(_eeprom_write_PARM_3 + 1),a
+      0000C9 E5*00            [12]  241 	mov	a,_eeprom_write_PARM_3
+      0000CB 25*00            [12]  242 	add	a,_eeprom_write_PARM_3
+      0000CD F5*00            [12]  243 	mov	_eeprom_write_PARM_3,a
+      0000CF E5*01            [12]  244 	mov	a,(_eeprom_write_PARM_3 + 1)
+      0000D1 33               [12]  245 	rlc	a
+      0000D2 F5*01            [12]  246 	mov	(_eeprom_write_PARM_3 + 1),a
+      0000D4 8D*00            [24]  247 	mov	_eeprom_write_PARM_4,r5
+      0000D6 8E*01            [24]  248 	mov	(_eeprom_write_PARM_4 + 1),r6
+      0000D8 8F*02            [24]  249 	mov	(_eeprom_write_PARM_4 + 2),r7
+      0000DA 75*00 04         [24]  250 	mov	_eeprom_write_PARM_2,#0x04
+      0000DD 75*01 3F         [24]  251 	mov	(_eeprom_write_PARM_2 + 1),#0x3f
+      0000E0 75 82 51         [24]  252 	mov	dpl, #0x51
+      0000E3 12r00r00         [24]  253 	lcall	_eeprom_write
+                                    254 ;	build/../eeprom_storage.c:30: return EEPROM_OK;
+      0000E6 75 82 00         [24]  255 	mov	dpl, #0x00
+                                    256 ;	build/../eeprom_storage.c:31: }
+      0000E9 22               [24]  257 	ret
+                                    258 	.area CSEG    (CODE)
+                                    259 	.area CONST   (CODE)
+                                    260 	.area XINIT   (CODE)
+                                    261 	.area CABS    (ABS,CODE)

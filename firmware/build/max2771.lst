@@ -1,0 +1,1578 @@
+                                      1 ;--------------------------------------------------------
+                                      2 ; File Created by SDCC : free open source ISO C Compiler
+                                      3 ; Version 4.5.0 #15242 (Linux)
+                                      4 ;--------------------------------------------------------
+                                      5 	.module max2771
+                                      6 	
+                                      7 	.optsdcc -mmcs51 --model-small
+                                      8 ;--------------------------------------------------------
+                                      9 ; Public variables in this module
+                                     10 ;--------------------------------------------------------
+                                     11 	.globl _board_spi_read_bit
+                                     12 	.globl _board_spi_write_bit
+                                     13 	.globl _board_delay_cycles
+                                     14 	.globl _board_d_read
+                                     15 	.globl _board_d_write
+                                     16 	.globl _board_d_init_output
+                                     17 	.globl _EIPX6
+                                     18 	.globl _EIPX5
+                                     19 	.globl _EIPX4
+                                     20 	.globl _PI2C
+                                     21 	.globl _PUSB
+                                     22 	.globl _EIEX6
+                                     23 	.globl _EIEX5
+                                     24 	.globl _EIEX4
+                                     25 	.globl _EI2C
+                                     26 	.globl _EUSB
+                                     27 	.globl _SMOD1
+                                     28 	.globl _ERESI
+                                     29 	.globl _RESI
+                                     30 	.globl _INT6
+                                     31 	.globl _CY
+                                     32 	.globl _AC
+                                     33 	.globl _F0
+                                     34 	.globl _RS1
+                                     35 	.globl _RS0
+                                     36 	.globl _OV
+                                     37 	.globl _FL
+                                     38 	.globl _P
+                                     39 	.globl _TF2
+                                     40 	.globl _EXF2
+                                     41 	.globl _RCLK
+                                     42 	.globl _TCLK
+                                     43 	.globl _EXEN2
+                                     44 	.globl _TR2
+                                     45 	.globl _C_T2
+                                     46 	.globl _CP_RL2
+                                     47 	.globl _SM01
+                                     48 	.globl _SM11
+                                     49 	.globl _SM21
+                                     50 	.globl _REN1
+                                     51 	.globl _TB81
+                                     52 	.globl _RB81
+                                     53 	.globl _TI1
+                                     54 	.globl _RI1
+                                     55 	.globl _PS1
+                                     56 	.globl _PT2
+                                     57 	.globl _PS0
+                                     58 	.globl _PT1
+                                     59 	.globl _PX1
+                                     60 	.globl _PT0
+                                     61 	.globl _PX0
+                                     62 	.globl _PD7
+                                     63 	.globl _PD6
+                                     64 	.globl _PD5
+                                     65 	.globl _PD4
+                                     66 	.globl _PD3
+                                     67 	.globl _PD2
+                                     68 	.globl _PD1
+                                     69 	.globl _PD0
+                                     70 	.globl _EA
+                                     71 	.globl _ES1
+                                     72 	.globl _ET2
+                                     73 	.globl _ES0
+                                     74 	.globl _ET1
+                                     75 	.globl _EX1
+                                     76 	.globl _ET0
+                                     77 	.globl _EX0
+                                     78 	.globl _PC7
+                                     79 	.globl _PC6
+                                     80 	.globl _PC5
+                                     81 	.globl _PC4
+                                     82 	.globl _PC3
+                                     83 	.globl _PC2
+                                     84 	.globl _PC1
+                                     85 	.globl _PC0
+                                     86 	.globl _SM0
+                                     87 	.globl _SM1
+                                     88 	.globl _SM2
+                                     89 	.globl _REN
+                                     90 	.globl _TB8
+                                     91 	.globl _RB8
+                                     92 	.globl _TI
+                                     93 	.globl _RI
+                                     94 	.globl _PB7
+                                     95 	.globl _PB6
+                                     96 	.globl _PB5
+                                     97 	.globl _PB4
+                                     98 	.globl _PB3
+                                     99 	.globl _PB2
+                                    100 	.globl _PB1
+                                    101 	.globl _PB0
+                                    102 	.globl _TF1
+                                    103 	.globl _TR1
+                                    104 	.globl _TF0
+                                    105 	.globl _TR0
+                                    106 	.globl _IE1
+                                    107 	.globl _IT1
+                                    108 	.globl _IE0
+                                    109 	.globl _IT0
+                                    110 	.globl _PA7
+                                    111 	.globl _PA6
+                                    112 	.globl _PA5
+                                    113 	.globl _PA4
+                                    114 	.globl _PA3
+                                    115 	.globl _PA2
+                                    116 	.globl _PA1
+                                    117 	.globl _PA0
+                                    118 	.globl _EIP
+                                    119 	.globl _B
+                                    120 	.globl _EIE
+                                    121 	.globl _ACC
+                                    122 	.globl _EICON
+                                    123 	.globl _PSW
+                                    124 	.globl _TH2
+                                    125 	.globl _TL2
+                                    126 	.globl _RCAP2H
+                                    127 	.globl _RCAP2L
+                                    128 	.globl _T2CON
+                                    129 	.globl _SBUF1
+                                    130 	.globl _SCON1
+                                    131 	.globl _GPIFSGLDATLNOX
+                                    132 	.globl _GPIFSGLDATLX
+                                    133 	.globl _GPIFSGLDATH
+                                    134 	.globl _GPIFTRIG
+                                    135 	.globl _EP01STAT
+                                    136 	.globl _IP
+                                    137 	.globl _OEE
+                                    138 	.globl _OED
+                                    139 	.globl _OEC
+                                    140 	.globl _OEB
+                                    141 	.globl _OEA
+                                    142 	.globl _IOE
+                                    143 	.globl _IOD
+                                    144 	.globl _AUTOPTRSETUP
+                                    145 	.globl _EP68FIFOFLGS
+                                    146 	.globl _EP24FIFOFLGS
+                                    147 	.globl _EP2468STAT
+                                    148 	.globl _IE
+                                    149 	.globl _INT4CLR
+                                    150 	.globl _INT2CLR
+                                    151 	.globl _IOC
+                                    152 	.globl _AUTOPTRL2
+                                    153 	.globl _AUTOPTRH2
+                                    154 	.globl _AUTOPTRL1
+                                    155 	.globl _AUTOPTRH1
+                                    156 	.globl _SBUF0
+                                    157 	.globl _SCON0
+                                    158 	.globl __XPAGE
+                                    159 	.globl _EXIF
+                                    160 	.globl _IOB
+                                    161 	.globl _CKCON
+                                    162 	.globl _TH1
+                                    163 	.globl _TH0
+                                    164 	.globl _TL1
+                                    165 	.globl _TL0
+                                    166 	.globl _TMOD
+                                    167 	.globl _TCON
+                                    168 	.globl _PCON
+                                    169 	.globl _DPS
+                                    170 	.globl _DPH1
+                                    171 	.globl _DPL1
+                                    172 	.globl _DPH
+                                    173 	.globl _DPL
+                                    174 	.globl _SP
+                                    175 	.globl _IOA
+                                    176 	.globl _GPCR2
+                                    177 	.globl _ECC2B2
+                                    178 	.globl _ECC2B1
+                                    179 	.globl _ECC2B0
+                                    180 	.globl _ECC1B2
+                                    181 	.globl _ECC1B1
+                                    182 	.globl _ECC1B0
+                                    183 	.globl _ECCRESET
+                                    184 	.globl _ECCCFG
+                                    185 	.globl _EP8FIFOBUF
+                                    186 	.globl _EP6FIFOBUF
+                                    187 	.globl _EP4FIFOBUF
+                                    188 	.globl _EP2FIFOBUF
+                                    189 	.globl _EP1INBUF
+                                    190 	.globl _EP1OUTBUF
+                                    191 	.globl _EP0BUF
+                                    192 	.globl _UDMACRCQUAL
+                                    193 	.globl _UDMACRCL
+                                    194 	.globl _UDMACRCH
+                                    195 	.globl _GPIFHOLDAMOUNT
+                                    196 	.globl _FLOWSTBHPERIOD
+                                    197 	.globl _FLOWSTBEDGE
+                                    198 	.globl _FLOWSTB
+                                    199 	.globl _FLOWHOLDOFF
+                                    200 	.globl _FLOWEQ1CTL
+                                    201 	.globl _FLOWEQ0CTL
+                                    202 	.globl _FLOWLOGIC
+                                    203 	.globl _FLOWSTATE
+                                    204 	.globl _GPIFABORT
+                                    205 	.globl _GPIFREADYSTAT
+                                    206 	.globl _GPIFREADYCFG
+                                    207 	.globl _XGPIFSGLDATLNOX
+                                    208 	.globl _XGPIFSGLDATLX
+                                    209 	.globl _XGPIFSGLDATH
+                                    210 	.globl _EP8GPIFTRIG
+                                    211 	.globl _EP8GPIFPFSTOP
+                                    212 	.globl _EP8GPIFFLGSEL
+                                    213 	.globl _EP6GPIFTRIG
+                                    214 	.globl _EP6GPIFPFSTOP
+                                    215 	.globl _EP6GPIFFLGSEL
+                                    216 	.globl _EP4GPIFTRIG
+                                    217 	.globl _EP4GPIFPFSTOP
+                                    218 	.globl _EP4GPIFFLGSEL
+                                    219 	.globl _EP2GPIFTRIG
+                                    220 	.globl _EP2GPIFPFSTOP
+                                    221 	.globl _EP2GPIFFLGSEL
+                                    222 	.globl _GPIFTCB0
+                                    223 	.globl _GPIFTCB1
+                                    224 	.globl _GPIFTCB2
+                                    225 	.globl _GPIFTCB3
+                                    226 	.globl _GPIFADRL
+                                    227 	.globl _GPIFADRH
+                                    228 	.globl _GPIFCTLCFG
+                                    229 	.globl _GPIFIDLECTL
+                                    230 	.globl _GPIFIDLECS
+                                    231 	.globl _GPIFWFSELECT
+                                    232 	.globl _SETUPDAT
+                                    233 	.globl _SUDPTRCTL
+                                    234 	.globl _SUDPTRL
+                                    235 	.globl _SUDPTRH
+                                    236 	.globl _EP8FIFOBCL
+                                    237 	.globl _EP8FIFOBCH
+                                    238 	.globl _EP6FIFOBCL
+                                    239 	.globl _EP6FIFOBCH
+                                    240 	.globl _EP4FIFOBCL
+                                    241 	.globl _EP4FIFOBCH
+                                    242 	.globl _EP2FIFOBCL
+                                    243 	.globl _EP2FIFOBCH
+                                    244 	.globl _EP8FIFOFLGS
+                                    245 	.globl _EP6FIFOFLGS
+                                    246 	.globl _EP4FIFOFLGS
+                                    247 	.globl _EP2FIFOFLGS
+                                    248 	.globl _EP8CS
+                                    249 	.globl _EP6CS
+                                    250 	.globl _EP4CS
+                                    251 	.globl _EP2CS
+                                    252 	.globl _EP1INCS
+                                    253 	.globl _EP1OUTCS
+                                    254 	.globl _EP0CS
+                                    255 	.globl _EP8BCL
+                                    256 	.globl _EP8BCH
+                                    257 	.globl _EP6BCL
+                                    258 	.globl _EP6BCH
+                                    259 	.globl _EP4BCL
+                                    260 	.globl _EP4BCH
+                                    261 	.globl _EP2BCL
+                                    262 	.globl _EP2BCH
+                                    263 	.globl _EP1INBC
+                                    264 	.globl _EP1OUTBC
+                                    265 	.globl _EP0BCL
+                                    266 	.globl _EP0BCH
+                                    267 	.globl _FNADDR
+                                    268 	.globl _MICROFRAME
+                                    269 	.globl _USBFRAMEL
+                                    270 	.globl _USBFRAMEH
+                                    271 	.globl _TOGCTL
+                                    272 	.globl _WAKEUPCS
+                                    273 	.globl _SUSPEND
+                                    274 	.globl _USBCS
+                                    275 	.globl _XAUTODAT2
+                                    276 	.globl _XAUTODAT1
+                                    277 	.globl _I2CTL
+                                    278 	.globl _I2DAT
+                                    279 	.globl _I2CS
+                                    280 	.globl _PORTECFG
+                                    281 	.globl _PORTCCFG
+                                    282 	.globl _PORTACFG
+                                    283 	.globl _INTSETUP
+                                    284 	.globl _INT4IVEC
+                                    285 	.globl _INT2IVEC
+                                    286 	.globl _CLRERRCNT
+                                    287 	.globl _ERRCNTLIM
+                                    288 	.globl _USBERRIRQ
+                                    289 	.globl _USBERRIE
+                                    290 	.globl _GPIFIRQ
+                                    291 	.globl _GPIFIE
+                                    292 	.globl _EPIRQ
+                                    293 	.globl _EPIE
+                                    294 	.globl _USBIRQ
+                                    295 	.globl _USBIE
+                                    296 	.globl _NAKIRQ
+                                    297 	.globl _NAKIE
+                                    298 	.globl _IBNIRQ
+                                    299 	.globl _IBNIE
+                                    300 	.globl _EP8FIFOIRQ
+                                    301 	.globl _EP8FIFOIE
+                                    302 	.globl _EP6FIFOIRQ
+                                    303 	.globl _EP6FIFOIE
+                                    304 	.globl _EP4FIFOIRQ
+                                    305 	.globl _EP4FIFOIE
+                                    306 	.globl _EP2FIFOIRQ
+                                    307 	.globl _EP2FIFOIE
+                                    308 	.globl _OUTPKTEND
+                                    309 	.globl _INPKTEND
+                                    310 	.globl _EP8ISOINPKTS
+                                    311 	.globl _EP6ISOINPKTS
+                                    312 	.globl _EP4ISOINPKTS
+                                    313 	.globl _EP2ISOINPKTS
+                                    314 	.globl _EP8FIFOPFL
+                                    315 	.globl _EP8FIFOPFH
+                                    316 	.globl _EP6FIFOPFL
+                                    317 	.globl _EP6FIFOPFH
+                                    318 	.globl _EP4FIFOPFL
+                                    319 	.globl _EP4FIFOPFH
+                                    320 	.globl _EP2FIFOPFL
+                                    321 	.globl _EP2FIFOPFH
+                                    322 	.globl _EP8AUTOINLENL
+                                    323 	.globl _EP8AUTOINLENH
+                                    324 	.globl _EP6AUTOINLENL
+                                    325 	.globl _EP6AUTOINLENH
+                                    326 	.globl _EP4AUTOINLENL
+                                    327 	.globl _EP4AUTOINLENH
+                                    328 	.globl _EP2AUTOINLENL
+                                    329 	.globl _EP2AUTOINLENH
+                                    330 	.globl _EP8FIFOCFG
+                                    331 	.globl _EP6FIFOCFG
+                                    332 	.globl _EP4FIFOCFG
+                                    333 	.globl _EP2FIFOCFG
+                                    334 	.globl _EP8CFG
+                                    335 	.globl _EP6CFG
+                                    336 	.globl _EP4CFG
+                                    337 	.globl _EP2CFG
+                                    338 	.globl _EP1INCFG
+                                    339 	.globl _EP1OUTCFG
+                                    340 	.globl _REVCTL
+                                    341 	.globl _REVID
+                                    342 	.globl _FIFOPINPOLAR
+                                    343 	.globl _UART230
+                                    344 	.globl _BPADDRL
+                                    345 	.globl _BPADDRH
+                                    346 	.globl _BREAKPT
+                                    347 	.globl _FIFORESET
+                                    348 	.globl _PINFLAGSCD
+                                    349 	.globl _PINFLAGSAB
+                                    350 	.globl _IFCONFIG
+                                    351 	.globl _CPUCS
+                                    352 	.globl _RES_WAVEDATA_END
+                                    353 	.globl _GPIF_WAVE_DATA
+                                    354 	.globl _max2771_apply_preset_PARM_3
+                                    355 	.globl _max2771_apply_preset_PARM_2
+                                    356 	.globl _max2771_read_register_PARM_3
+                                    357 	.globl _max2771_read_register_PARM_2
+                                    358 	.globl _max2771_write_register_PARM_3
+                                    359 	.globl _max2771_write_register_PARM_2
+                                    360 	.globl _max2771_create
+                                    361 	.globl _max2771_destroy
+                                    362 	.globl _max2771_write_register
+                                    363 	.globl _max2771_read_register
+                                    364 	.globl _max2771_load_defaults
+                                    365 	.globl _max2771_apply_preset
+                                    366 	.globl _max2771_get_lock_status
+                                    367 ;--------------------------------------------------------
+                                    368 ; special function registers
+                                    369 ;--------------------------------------------------------
+                                    370 	.area RSEG    (ABS,DATA)
+      000000                        371 	.org 0x0000
+                           000080   372 _IOA	=	0x0080
+                           000081   373 _SP	=	0x0081
+                           000082   374 _DPL	=	0x0082
+                           000083   375 _DPH	=	0x0083
+                           000084   376 _DPL1	=	0x0084
+                           000085   377 _DPH1	=	0x0085
+                           000086   378 _DPS	=	0x0086
+                           000087   379 _PCON	=	0x0087
+                           000088   380 _TCON	=	0x0088
+                           000089   381 _TMOD	=	0x0089
+                           00008A   382 _TL0	=	0x008a
+                           00008B   383 _TL1	=	0x008b
+                           00008C   384 _TH0	=	0x008c
+                           00008D   385 _TH1	=	0x008d
+                           00008E   386 _CKCON	=	0x008e
+                           000090   387 _IOB	=	0x0090
+                           000091   388 _EXIF	=	0x0091
+                           000092   389 __XPAGE	=	0x0092
+                           000098   390 _SCON0	=	0x0098
+                           000099   391 _SBUF0	=	0x0099
+                           00009A   392 _AUTOPTRH1	=	0x009a
+                           00009B   393 _AUTOPTRL1	=	0x009b
+                           00009D   394 _AUTOPTRH2	=	0x009d
+                           00009E   395 _AUTOPTRL2	=	0x009e
+                           0000A0   396 _IOC	=	0x00a0
+                           0000A1   397 _INT2CLR	=	0x00a1
+                           0000A2   398 _INT4CLR	=	0x00a2
+                           0000A8   399 _IE	=	0x00a8
+                           0000AA   400 _EP2468STAT	=	0x00aa
+                           0000AB   401 _EP24FIFOFLGS	=	0x00ab
+                           0000AC   402 _EP68FIFOFLGS	=	0x00ac
+                           0000AF   403 _AUTOPTRSETUP	=	0x00af
+                           0000B0   404 _IOD	=	0x00b0
+                           0000B1   405 _IOE	=	0x00b1
+                           0000B2   406 _OEA	=	0x00b2
+                           0000B3   407 _OEB	=	0x00b3
+                           0000B4   408 _OEC	=	0x00b4
+                           0000B5   409 _OED	=	0x00b5
+                           0000B6   410 _OEE	=	0x00b6
+                           0000B8   411 _IP	=	0x00b8
+                           0000BA   412 _EP01STAT	=	0x00ba
+                           0000BB   413 _GPIFTRIG	=	0x00bb
+                           0000BD   414 _GPIFSGLDATH	=	0x00bd
+                           0000BE   415 _GPIFSGLDATLX	=	0x00be
+                           0000BF   416 _GPIFSGLDATLNOX	=	0x00bf
+                           0000C0   417 _SCON1	=	0x00c0
+                           0000C1   418 _SBUF1	=	0x00c1
+                           0000C8   419 _T2CON	=	0x00c8
+                           0000CA   420 _RCAP2L	=	0x00ca
+                           0000CB   421 _RCAP2H	=	0x00cb
+                           0000CC   422 _TL2	=	0x00cc
+                           0000CD   423 _TH2	=	0x00cd
+                           0000D0   424 _PSW	=	0x00d0
+                           0000D8   425 _EICON	=	0x00d8
+                           0000E0   426 _ACC	=	0x00e0
+                           0000E8   427 _EIE	=	0x00e8
+                           0000F0   428 _B	=	0x00f0
+                           0000F8   429 _EIP	=	0x00f8
+                                    430 ;--------------------------------------------------------
+                                    431 ; special function bits
+                                    432 ;--------------------------------------------------------
+                                    433 	.area RSEG    (ABS,DATA)
+      000000                        434 	.org 0x0000
+                           000080   435 _PA0	=	0x0080
+                           000081   436 _PA1	=	0x0081
+                           000082   437 _PA2	=	0x0082
+                           000083   438 _PA3	=	0x0083
+                           000084   439 _PA4	=	0x0084
+                           000085   440 _PA5	=	0x0085
+                           000086   441 _PA6	=	0x0086
+                           000087   442 _PA7	=	0x0087
+                           000088   443 _IT0	=	0x0088
+                           000089   444 _IE0	=	0x0089
+                           00008A   445 _IT1	=	0x008a
+                           00008B   446 _IE1	=	0x008b
+                           00008C   447 _TR0	=	0x008c
+                           00008D   448 _TF0	=	0x008d
+                           00008E   449 _TR1	=	0x008e
+                           00008F   450 _TF1	=	0x008f
+                           000090   451 _PB0	=	0x0090
+                           000091   452 _PB1	=	0x0091
+                           000092   453 _PB2	=	0x0092
+                           000093   454 _PB3	=	0x0093
+                           000094   455 _PB4	=	0x0094
+                           000095   456 _PB5	=	0x0095
+                           000096   457 _PB6	=	0x0096
+                           000097   458 _PB7	=	0x0097
+                           000098   459 _RI	=	0x0098
+                           000099   460 _TI	=	0x0099
+                           00009A   461 _RB8	=	0x009a
+                           00009B   462 _TB8	=	0x009b
+                           00009C   463 _REN	=	0x009c
+                           00009D   464 _SM2	=	0x009d
+                           00009E   465 _SM1	=	0x009e
+                           00009F   466 _SM0	=	0x009f
+                           0000A0   467 _PC0	=	0x00a0
+                           0000A1   468 _PC1	=	0x00a1
+                           0000A2   469 _PC2	=	0x00a2
+                           0000A3   470 _PC3	=	0x00a3
+                           0000A4   471 _PC4	=	0x00a4
+                           0000A5   472 _PC5	=	0x00a5
+                           0000A6   473 _PC6	=	0x00a6
+                           0000A7   474 _PC7	=	0x00a7
+                           0000A8   475 _EX0	=	0x00a8
+                           0000A9   476 _ET0	=	0x00a9
+                           0000AA   477 _EX1	=	0x00aa
+                           0000AB   478 _ET1	=	0x00ab
+                           0000AC   479 _ES0	=	0x00ac
+                           0000AD   480 _ET2	=	0x00ad
+                           0000AE   481 _ES1	=	0x00ae
+                           0000AF   482 _EA	=	0x00af
+                           0000B0   483 _PD0	=	0x00b0
+                           0000B1   484 _PD1	=	0x00b1
+                           0000B2   485 _PD2	=	0x00b2
+                           0000B3   486 _PD3	=	0x00b3
+                           0000B4   487 _PD4	=	0x00b4
+                           0000B5   488 _PD5	=	0x00b5
+                           0000B6   489 _PD6	=	0x00b6
+                           0000B7   490 _PD7	=	0x00b7
+                           0000B8   491 _PX0	=	0x00b8
+                           0000B9   492 _PT0	=	0x00b9
+                           0000BA   493 _PX1	=	0x00ba
+                           0000BB   494 _PT1	=	0x00bb
+                           0000BC   495 _PS0	=	0x00bc
+                           0000BD   496 _PT2	=	0x00bd
+                           0000BE   497 _PS1	=	0x00be
+                           0000C0   498 _RI1	=	0x00c0
+                           0000C1   499 _TI1	=	0x00c1
+                           0000C2   500 _RB81	=	0x00c2
+                           0000C3   501 _TB81	=	0x00c3
+                           0000C4   502 _REN1	=	0x00c4
+                           0000C5   503 _SM21	=	0x00c5
+                           0000C6   504 _SM11	=	0x00c6
+                           0000C7   505 _SM01	=	0x00c7
+                           0000C8   506 _CP_RL2	=	0x00c8
+                           0000C9   507 _C_T2	=	0x00c9
+                           0000CA   508 _TR2	=	0x00ca
+                           0000CB   509 _EXEN2	=	0x00cb
+                           0000CC   510 _TCLK	=	0x00cc
+                           0000CD   511 _RCLK	=	0x00cd
+                           0000CE   512 _EXF2	=	0x00ce
+                           0000CF   513 _TF2	=	0x00cf
+                           0000D0   514 _P	=	0x00d0
+                           0000D1   515 _FL	=	0x00d1
+                           0000D2   516 _OV	=	0x00d2
+                           0000D3   517 _RS0	=	0x00d3
+                           0000D4   518 _RS1	=	0x00d4
+                           0000D5   519 _F0	=	0x00d5
+                           0000D6   520 _AC	=	0x00d6
+                           0000D7   521 _CY	=	0x00d7
+                           0000DB   522 _INT6	=	0x00db
+                           0000DC   523 _RESI	=	0x00dc
+                           0000DD   524 _ERESI	=	0x00dd
+                           0000DF   525 _SMOD1	=	0x00df
+                           0000E8   526 _EUSB	=	0x00e8
+                           0000E9   527 _EI2C	=	0x00e9
+                           0000EA   528 _EIEX4	=	0x00ea
+                           0000EB   529 _EIEX5	=	0x00eb
+                           0000EC   530 _EIEX6	=	0x00ec
+                           0000F8   531 _PUSB	=	0x00f8
+                           0000F9   532 _PI2C	=	0x00f9
+                           0000FA   533 _EIPX4	=	0x00fa
+                           0000FB   534 _EIPX5	=	0x00fb
+                           0000FC   535 _EIPX6	=	0x00fc
+                                    536 ;--------------------------------------------------------
+                                    537 ; overlayable register banks
+                                    538 ;--------------------------------------------------------
+                                    539 	.area REG_BANK_0	(REL,OVR,DATA)
+      000000                        540 	.ds 8
+                                    541 ;--------------------------------------------------------
+                                    542 ; internal ram data
+                                    543 ;--------------------------------------------------------
+                                    544 	.area DSEG    (DATA)
+      000000                        545 _max2771_write_header_PARM_2:
+      000000                        546 	.ds 1
+      000001                        547 _max2771_write_register_PARM_2:
+      000001                        548 	.ds 1
+      000002                        549 _max2771_write_register_PARM_3:
+      000002                        550 	.ds 4
+      000006                        551 _max2771_read_register_PARM_2:
+      000006                        552 	.ds 1
+      000007                        553 _max2771_read_register_PARM_3:
+      000007                        554 	.ds 3
+      00000A                        555 _max2771_read_register_i_10000_37:
+      00000A                        556 	.ds 1
+      00000B                        557 _max2771_read_register_val_10000_37:
+      00000B                        558 	.ds 4
+      00000F                        559 _max2771_read_register_sloc0_1_0:
+      00000F                        560 	.ds 3
+      000012                        561 _max2771_apply_preset_PARM_2:
+      000012                        562 	.ds 3
+      000015                        563 _max2771_apply_preset_PARM_3:
+      000015                        564 	.ds 1
+                                    565 ;--------------------------------------------------------
+                                    566 ; overlayable items in internal ram
+                                    567 ;--------------------------------------------------------
+                                    568 	.area	OSEG    (OVR,DATA)
+                                    569 ;--------------------------------------------------------
+                                    570 ; indirectly addressable internal ram data
+                                    571 ;--------------------------------------------------------
+                                    572 	.area ISEG    (DATA)
+                                    573 ;--------------------------------------------------------
+                                    574 ; absolute internal ram data
+                                    575 ;--------------------------------------------------------
+                                    576 	.area IABS    (ABS,DATA)
+                                    577 	.area IABS    (ABS,DATA)
+                                    578 ;--------------------------------------------------------
+                                    579 ; bit data
+                                    580 ;--------------------------------------------------------
+                                    581 	.area BSEG    (BIT)
+                                    582 ;--------------------------------------------------------
+                                    583 ; paged external ram data
+                                    584 ;--------------------------------------------------------
+                                    585 	.area PSEG    (PAG,XDATA)
+                                    586 ;--------------------------------------------------------
+                                    587 ; uninitialized external ram data
+                                    588 ;--------------------------------------------------------
+                                    589 	.area XSEG    (XDATA)
+                           00E400   590 _GPIF_WAVE_DATA	=	0xe400
+                           00E480   591 _RES_WAVEDATA_END	=	0xe480
+                           00E600   592 _CPUCS	=	0xe600
+                           00E601   593 _IFCONFIG	=	0xe601
+                           00E602   594 _PINFLAGSAB	=	0xe602
+                           00E603   595 _PINFLAGSCD	=	0xe603
+                           00E604   596 _FIFORESET	=	0xe604
+                           00E605   597 _BREAKPT	=	0xe605
+                           00E606   598 _BPADDRH	=	0xe606
+                           00E607   599 _BPADDRL	=	0xe607
+                           00E608   600 _UART230	=	0xe608
+                           00E609   601 _FIFOPINPOLAR	=	0xe609
+                           00E60A   602 _REVID	=	0xe60a
+                           00E60B   603 _REVCTL	=	0xe60b
+                           00E610   604 _EP1OUTCFG	=	0xe610
+                           00E611   605 _EP1INCFG	=	0xe611
+                           00E612   606 _EP2CFG	=	0xe612
+                           00E613   607 _EP4CFG	=	0xe613
+                           00E614   608 _EP6CFG	=	0xe614
+                           00E615   609 _EP8CFG	=	0xe615
+                           00E618   610 _EP2FIFOCFG	=	0xe618
+                           00E619   611 _EP4FIFOCFG	=	0xe619
+                           00E61A   612 _EP6FIFOCFG	=	0xe61a
+                           00E61B   613 _EP8FIFOCFG	=	0xe61b
+                           00E620   614 _EP2AUTOINLENH	=	0xe620
+                           00E621   615 _EP2AUTOINLENL	=	0xe621
+                           00E622   616 _EP4AUTOINLENH	=	0xe622
+                           00E623   617 _EP4AUTOINLENL	=	0xe623
+                           00E624   618 _EP6AUTOINLENH	=	0xe624
+                           00E625   619 _EP6AUTOINLENL	=	0xe625
+                           00E626   620 _EP8AUTOINLENH	=	0xe626
+                           00E627   621 _EP8AUTOINLENL	=	0xe627
+                           00E630   622 _EP2FIFOPFH	=	0xe630
+                           00E631   623 _EP2FIFOPFL	=	0xe631
+                           00E632   624 _EP4FIFOPFH	=	0xe632
+                           00E633   625 _EP4FIFOPFL	=	0xe633
+                           00E634   626 _EP6FIFOPFH	=	0xe634
+                           00E635   627 _EP6FIFOPFL	=	0xe635
+                           00E636   628 _EP8FIFOPFH	=	0xe636
+                           00E637   629 _EP8FIFOPFL	=	0xe637
+                           00E640   630 _EP2ISOINPKTS	=	0xe640
+                           00E641   631 _EP4ISOINPKTS	=	0xe641
+                           00E642   632 _EP6ISOINPKTS	=	0xe642
+                           00E643   633 _EP8ISOINPKTS	=	0xe643
+                           00E648   634 _INPKTEND	=	0xe648
+                           00E649   635 _OUTPKTEND	=	0xe649
+                           00E650   636 _EP2FIFOIE	=	0xe650
+                           00E651   637 _EP2FIFOIRQ	=	0xe651
+                           00E652   638 _EP4FIFOIE	=	0xe652
+                           00E653   639 _EP4FIFOIRQ	=	0xe653
+                           00E654   640 _EP6FIFOIE	=	0xe654
+                           00E655   641 _EP6FIFOIRQ	=	0xe655
+                           00E656   642 _EP8FIFOIE	=	0xe656
+                           00E657   643 _EP8FIFOIRQ	=	0xe657
+                           00E658   644 _IBNIE	=	0xe658
+                           00E659   645 _IBNIRQ	=	0xe659
+                           00E65A   646 _NAKIE	=	0xe65a
+                           00E65B   647 _NAKIRQ	=	0xe65b
+                           00E65C   648 _USBIE	=	0xe65c
+                           00E65D   649 _USBIRQ	=	0xe65d
+                           00E65E   650 _EPIE	=	0xe65e
+                           00E65F   651 _EPIRQ	=	0xe65f
+                           00E660   652 _GPIFIE	=	0xe660
+                           00E661   653 _GPIFIRQ	=	0xe661
+                           00E662   654 _USBERRIE	=	0xe662
+                           00E663   655 _USBERRIRQ	=	0xe663
+                           00E664   656 _ERRCNTLIM	=	0xe664
+                           00E665   657 _CLRERRCNT	=	0xe665
+                           00E666   658 _INT2IVEC	=	0xe666
+                           00E667   659 _INT4IVEC	=	0xe667
+                           00E668   660 _INTSETUP	=	0xe668
+                           00E670   661 _PORTACFG	=	0xe670
+                           00E671   662 _PORTCCFG	=	0xe671
+                           00E672   663 _PORTECFG	=	0xe672
+                           00E678   664 _I2CS	=	0xe678
+                           00E679   665 _I2DAT	=	0xe679
+                           00E67A   666 _I2CTL	=	0xe67a
+                           00E67B   667 _XAUTODAT1	=	0xe67b
+                           00E67C   668 _XAUTODAT2	=	0xe67c
+                           00E680   669 _USBCS	=	0xe680
+                           00E681   670 _SUSPEND	=	0xe681
+                           00E682   671 _WAKEUPCS	=	0xe682
+                           00E683   672 _TOGCTL	=	0xe683
+                           00E684   673 _USBFRAMEH	=	0xe684
+                           00E685   674 _USBFRAMEL	=	0xe685
+                           00E686   675 _MICROFRAME	=	0xe686
+                           00E687   676 _FNADDR	=	0xe687
+                           00E68A   677 _EP0BCH	=	0xe68a
+                           00E68B   678 _EP0BCL	=	0xe68b
+                           00E68D   679 _EP1OUTBC	=	0xe68d
+                           00E68F   680 _EP1INBC	=	0xe68f
+                           00E690   681 _EP2BCH	=	0xe690
+                           00E691   682 _EP2BCL	=	0xe691
+                           00E694   683 _EP4BCH	=	0xe694
+                           00E695   684 _EP4BCL	=	0xe695
+                           00E698   685 _EP6BCH	=	0xe698
+                           00E699   686 _EP6BCL	=	0xe699
+                           00E69C   687 _EP8BCH	=	0xe69c
+                           00E69D   688 _EP8BCL	=	0xe69d
+                           00E6A0   689 _EP0CS	=	0xe6a0
+                           00E6A1   690 _EP1OUTCS	=	0xe6a1
+                           00E6A2   691 _EP1INCS	=	0xe6a2
+                           00E6A3   692 _EP2CS	=	0xe6a3
+                           00E6A4   693 _EP4CS	=	0xe6a4
+                           00E6A5   694 _EP6CS	=	0xe6a5
+                           00E6A6   695 _EP8CS	=	0xe6a6
+                           00E6A7   696 _EP2FIFOFLGS	=	0xe6a7
+                           00E6A8   697 _EP4FIFOFLGS	=	0xe6a8
+                           00E6A9   698 _EP6FIFOFLGS	=	0xe6a9
+                           00E6AA   699 _EP8FIFOFLGS	=	0xe6aa
+                           00E6AB   700 _EP2FIFOBCH	=	0xe6ab
+                           00E6AC   701 _EP2FIFOBCL	=	0xe6ac
+                           00E6AD   702 _EP4FIFOBCH	=	0xe6ad
+                           00E6AE   703 _EP4FIFOBCL	=	0xe6ae
+                           00E6AF   704 _EP6FIFOBCH	=	0xe6af
+                           00E6B0   705 _EP6FIFOBCL	=	0xe6b0
+                           00E6B1   706 _EP8FIFOBCH	=	0xe6b1
+                           00E6B2   707 _EP8FIFOBCL	=	0xe6b2
+                           00E6B3   708 _SUDPTRH	=	0xe6b3
+                           00E6B4   709 _SUDPTRL	=	0xe6b4
+                           00E6B5   710 _SUDPTRCTL	=	0xe6b5
+                           00E6B8   711 _SETUPDAT	=	0xe6b8
+                           00E6C0   712 _GPIFWFSELECT	=	0xe6c0
+                           00E6C1   713 _GPIFIDLECS	=	0xe6c1
+                           00E6C2   714 _GPIFIDLECTL	=	0xe6c2
+                           00E6C3   715 _GPIFCTLCFG	=	0xe6c3
+                           00E6C4   716 _GPIFADRH	=	0xe6c4
+                           00E6C5   717 _GPIFADRL	=	0xe6c5
+                           00E6CE   718 _GPIFTCB3	=	0xe6ce
+                           00E6CF   719 _GPIFTCB2	=	0xe6cf
+                           00E6D0   720 _GPIFTCB1	=	0xe6d0
+                           00E6D1   721 _GPIFTCB0	=	0xe6d1
+                           00E6D2   722 _EP2GPIFFLGSEL	=	0xe6d2
+                           00E6D3   723 _EP2GPIFPFSTOP	=	0xe6d3
+                           00E6D4   724 _EP2GPIFTRIG	=	0xe6d4
+                           00E6DA   725 _EP4GPIFFLGSEL	=	0xe6da
+                           00E6DB   726 _EP4GPIFPFSTOP	=	0xe6db
+                           00E6DC   727 _EP4GPIFTRIG	=	0xe6dc
+                           00E6E2   728 _EP6GPIFFLGSEL	=	0xe6e2
+                           00E6E3   729 _EP6GPIFPFSTOP	=	0xe6e3
+                           00E6E4   730 _EP6GPIFTRIG	=	0xe6e4
+                           00E6EA   731 _EP8GPIFFLGSEL	=	0xe6ea
+                           00E6EB   732 _EP8GPIFPFSTOP	=	0xe6eb
+                           00E6EC   733 _EP8GPIFTRIG	=	0xe6ec
+                           00E6F0   734 _XGPIFSGLDATH	=	0xe6f0
+                           00E6F1   735 _XGPIFSGLDATLX	=	0xe6f1
+                           00E6F2   736 _XGPIFSGLDATLNOX	=	0xe6f2
+                           00E6F3   737 _GPIFREADYCFG	=	0xe6f3
+                           00E6F4   738 _GPIFREADYSTAT	=	0xe6f4
+                           00E6F5   739 _GPIFABORT	=	0xe6f5
+                           00E6C6   740 _FLOWSTATE	=	0xe6c6
+                           00E6C7   741 _FLOWLOGIC	=	0xe6c7
+                           00E6C8   742 _FLOWEQ0CTL	=	0xe6c8
+                           00E6C9   743 _FLOWEQ1CTL	=	0xe6c9
+                           00E6CA   744 _FLOWHOLDOFF	=	0xe6ca
+                           00E6CB   745 _FLOWSTB	=	0xe6cb
+                           00E6CC   746 _FLOWSTBEDGE	=	0xe6cc
+                           00E6CD   747 _FLOWSTBHPERIOD	=	0xe6cd
+                           00E60C   748 _GPIFHOLDAMOUNT	=	0xe60c
+                           00E67D   749 _UDMACRCH	=	0xe67d
+                           00E67E   750 _UDMACRCL	=	0xe67e
+                           00E67F   751 _UDMACRCQUAL	=	0xe67f
+                           00E740   752 _EP0BUF	=	0xe740
+                           00E780   753 _EP1OUTBUF	=	0xe780
+                           00E7C0   754 _EP1INBUF	=	0xe7c0
+                           00F000   755 _EP2FIFOBUF	=	0xf000
+                           00F400   756 _EP4FIFOBUF	=	0xf400
+                           00F800   757 _EP6FIFOBUF	=	0xf800
+                           00FC00   758 _EP8FIFOBUF	=	0xfc00
+                           00E628   759 _ECCCFG	=	0xe628
+                           00E629   760 _ECCRESET	=	0xe629
+                           00E62A   761 _ECC1B0	=	0xe62a
+                           00E62B   762 _ECC1B1	=	0xe62b
+                           00E62C   763 _ECC1B2	=	0xe62c
+                           00E62D   764 _ECC2B0	=	0xe62d
+                           00E62E   765 _ECC2B1	=	0xe62e
+                           00E62F   766 _ECC2B2	=	0xe62f
+                           00E50D   767 _GPCR2	=	0xe50d
+      000000                        768 _max2771_create_instances_10000_25:
+      000000                        769 	.ds 6
+                                    770 ;--------------------------------------------------------
+                                    771 ; absolute external ram data
+                                    772 ;--------------------------------------------------------
+                                    773 	.area XABS    (ABS,XDATA)
+                                    774 ;--------------------------------------------------------
+                                    775 ; initialized external ram data
+                                    776 ;--------------------------------------------------------
+                                    777 	.area XISEG   (XDATA)
+                                    778 	.area HOME    (CODE)
+                                    779 	.area GSINIT0 (CODE)
+                                    780 	.area GSINIT1 (CODE)
+                                    781 	.area GSINIT2 (CODE)
+                                    782 	.area GSINIT3 (CODE)
+                                    783 	.area GSINIT4 (CODE)
+                                    784 	.area GSINIT5 (CODE)
+                                    785 	.area GSINIT  (CODE)
+                                    786 	.area GSFINAL (CODE)
+                                    787 	.area CSEG    (CODE)
+                                    788 ;--------------------------------------------------------
+                                    789 ; global & static initialisations
+                                    790 ;--------------------------------------------------------
+                                    791 	.area HOME    (CODE)
+                                    792 	.area GSINIT  (CODE)
+                                    793 	.area GSFINAL (CODE)
+                                    794 	.area GSINIT  (CODE)
+                                    795 ;--------------------------------------------------------
+                                    796 ; Home
+                                    797 ;--------------------------------------------------------
+                                    798 	.area HOME    (CODE)
+                                    799 	.area HOME    (CODE)
+                                    800 ;--------------------------------------------------------
+                                    801 ; code
+                                    802 ;--------------------------------------------------------
+                                    803 	.area CSEG    (CODE)
+                                    804 ;------------------------------------------------------------
+                                    805 ;Allocation info for local variables in function 'max2771_write_header'
+                                    806 ;------------------------------------------------------------
+                                    807 ;mode          Allocated with name '_max2771_write_header_PARM_2'
+                                    808 ;addr          Allocated to registers r6 r7 
+                                    809 ;i             Allocated to registers r5 
+                                    810 ;------------------------------------------------------------
+                                    811 ;	build/../max2771.c:28: static void max2771_write_header(uint16_t addr, uint8_t mode) {
+                                    812 ;	-----------------------------------------
+                                    813 ;	 function max2771_write_header
+                                    814 ;	-----------------------------------------
+      000000                        815 _max2771_write_header:
+                           000007   816 	ar7 = 0x07
+                           000006   817 	ar6 = 0x06
+                           000005   818 	ar5 = 0x05
+                           000004   819 	ar4 = 0x04
+                           000003   820 	ar3 = 0x03
+                           000002   821 	ar2 = 0x02
+                           000001   822 	ar1 = 0x01
+                           000000   823 	ar0 = 0x00
+      000000 AE 82            [24]  824 	mov	r6, dpl
+      000002 AF 83            [24]  825 	mov	r7, dph
+                                    826 ;	build/../max2771.c:30: for (i = 11; i >= 0; i--) {
+      000004 7D 0B            [12]  827 	mov	r5,#0x0b
+      000006                        828 00103$:
+                                    829 ;	build/../max2771.c:31: board_spi_write_bit((pin_state_t)((addr >> i) & 1U));
+      000006 8D F0            [24]  830 	mov	b,r5
+      000008 05 F0            [12]  831 	inc	b
+      00000A AB 06            [24]  832 	mov	r3,ar6
+      00000C AC 07            [24]  833 	mov	r4,ar7
+      00000E 80 07            [24]  834 	sjmp	00136$
+      000010                        835 00135$:
+      000010 C3               [12]  836 	clr	c
+      000011 EC               [12]  837 	mov	a,r4
+      000012 13               [12]  838 	rrc	a
+      000013 FC               [12]  839 	mov	r4,a
+      000014 EB               [12]  840 	mov	a,r3
+      000015 13               [12]  841 	rrc	a
+      000016 FB               [12]  842 	mov	r3,a
+      000017                        843 00136$:
+      000017 D5 F0 F6         [24]  844 	djnz	b,00135$
+      00001A EB               [12]  845 	mov	a,r3
+      00001B 54 01            [12]  846 	anl	a,#0x01
+      00001D F5 82            [12]  847 	mov	dpl,a
+      00001F C0 07            [24]  848 	push	ar7
+      000021 C0 06            [24]  849 	push	ar6
+      000023 C0 05            [24]  850 	push	ar5
+      000025 12r00r00         [24]  851 	lcall	_board_spi_write_bit
+      000028 D0 05            [24]  852 	pop	ar5
+      00002A D0 06            [24]  853 	pop	ar6
+      00002C D0 07            [24]  854 	pop	ar7
+                                    855 ;	build/../max2771.c:30: for (i = 11; i >= 0; i--) {
+      00002E 1D               [12]  856 	dec	r5
+      00002F ED               [12]  857 	mov	a,r5
+      000030 30 E7 D3         [24]  858 	jnb	acc.7,00103$
+                                    859 ;	build/../max2771.c:33: board_spi_write_bit((pin_state_t)mode); /* 0=write, 1=read */
+                                    860 ;	assignBit
+      000033 E5*00            [12]  861 	mov	a,_max2771_write_header_PARM_2
+      000035 24 FF            [12]  862 	add	a,#0xff
+      000037 E4               [12]  863 	clr	a
+      000038 33               [12]  864 	rlc	a
+      000039 F5 82            [12]  865 	mov	dpl,a
+      00003B 12r00r00         [24]  866 	lcall	_board_spi_write_bit
+                                    867 ;	build/../max2771.c:34: for (i = 0; i < 3; i++) {
+      00003E 7F 00            [12]  868 	mov	r7,#0x00
+      000040                        869 00105$:
+                                    870 ;	build/../max2771.c:35: board_spi_write_bit(PIN_LOW);
+      000040 75 82 00         [24]  871 	mov	dpl, #0x00
+      000043 C0 07            [24]  872 	push	ar7
+      000045 12r00r00         [24]  873 	lcall	_board_spi_write_bit
+      000048 D0 07            [24]  874 	pop	ar7
+                                    875 ;	build/../max2771.c:34: for (i = 0; i < 3; i++) {
+      00004A 0F               [12]  876 	inc	r7
+      00004B C3               [12]  877 	clr	c
+      00004C EF               [12]  878 	mov	a,r7
+      00004D 64 80            [12]  879 	xrl	a,#0x80
+      00004F 94 83            [12]  880 	subb	a,#0x83
+      000051 40 ED            [24]  881 	jc	00105$
+                                    882 ;	build/../max2771.c:37: board_delay_cycles(SCLK_DELAY_CYCLES);
+      000053 75 82 03         [24]  883 	mov	dpl, #0x03
+                                    884 ;	build/../max2771.c:38: }
+      000056 02r00r00         [24]  885 	ljmp	_board_delay_cycles
+                                    886 ;------------------------------------------------------------
+                                    887 ;Allocation info for local variables in function 'max2771_create'
+                                    888 ;------------------------------------------------------------
+                                    889 ;channel       Allocated to registers r7 
+                                    890 ;inst          Allocated to registers r5 r4 r6 
+                                    891 ;instances     Allocated with name '_max2771_create_instances_10000_25'
+                                    892 ;------------------------------------------------------------
+                                    893 ;	build/../max2771.c:40: max2771_handle_t max2771_create(max2771_channel_t channel) {
+                                    894 ;	-----------------------------------------
+                                    895 ;	 function max2771_create
+                                    896 ;	-----------------------------------------
+      000059                        897 _max2771_create:
+      000059 AF 82            [24]  898 	mov	r7, dpl
+                                    899 ;	build/../max2771.c:43: if (channel >= MAX2771_CH_COUNT) {
+      00005B BF 02 00         [24]  900 	cjne	r7,#0x02,00120$
+      00005E                        901 00120$:
+      00005E 40 07            [24]  902 	jc	00102$
+                                    903 ;	build/../max2771.c:44: return NULL;
+      000060 90 00 00         [24]  904 	mov	dptr,#0x0000
+      000063 75 F0 00         [24]  905 	mov	b, #0x00
+      000066 22               [24]  906 	ret
+      000067                        907 00102$:
+                                    908 ;	build/../max2771.c:47: max2771_handle_t inst = &instances[channel];
+      000067 EF               [12]  909 	mov	a,r7
+      000068 75 F0 03         [24]  910 	mov	b,#0x03
+      00006B A4               [48]  911 	mul	ab
+      00006C 24r00            [12]  912 	add	a, #_max2771_create_instances_10000_25
+      00006E FD               [12]  913 	mov	r5,a
+      00006F 74s00            [12]  914 	mov	a,#(_max2771_create_instances_10000_25 >> 8)
+      000071 35 F0            [12]  915 	addc	a, b
+      000073 FC               [12]  916 	mov	r4,a
+      000074 7E 00            [12]  917 	mov	r6,#0x00
+                                    918 ;	build/../max2771.c:48: inst->channel = channel;
+      000076 8D 82            [24]  919 	mov	dpl,r5
+      000078 8C 83            [24]  920 	mov	dph,r4
+      00007A EF               [12]  921 	mov	a,r7
+      00007B F0               [24]  922 	movx	@dptr,a
+                                    923 ;	build/../max2771.c:50: if (channel == MAX2771_CH1) {
+      00007C EF               [12]  924 	mov	a,r7
+      00007D 70 29            [24]  925 	jnz	00104$
+                                    926 ;	build/../max2771.c:51: inst->cs_pin   = CSN1_PIN;
+      00007F 74 01            [12]  927 	mov	a,#0x01
+      000081 2D               [12]  928 	add	a, r5
+      000082 FA               [12]  929 	mov	r2,a
+      000083 E4               [12]  930 	clr	a
+      000084 3C               [12]  931 	addc	a, r4
+      000085 FB               [12]  932 	mov	r3,a
+      000086 8E 07            [24]  933 	mov	ar7,r6
+      000088 8A 82            [24]  934 	mov	dpl,r2
+      00008A 8B 83            [24]  935 	mov	dph,r3
+      00008C 8F F0            [24]  936 	mov	b,r7
+      00008E E4               [12]  937 	clr	a
+      00008F 12r00r00         [24]  938 	lcall	__gptrput
+                                    939 ;	build/../max2771.c:52: inst->stat_pin = STAT1_PIN;
+      000092 74 02            [12]  940 	mov	a,#0x02
+      000094 2D               [12]  941 	add	a, r5
+      000095 FA               [12]  942 	mov	r2,a
+      000096 E4               [12]  943 	clr	a
+      000097 3C               [12]  944 	addc	a, r4
+      000098 FB               [12]  945 	mov	r3,a
+      000099 8E 07            [24]  946 	mov	ar7,r6
+      00009B 8A 82            [24]  947 	mov	dpl,r2
+      00009D 8B 83            [24]  948 	mov	dph,r3
+      00009F 8F F0            [24]  949 	mov	b,r7
+      0000A1 74 04            [12]  950 	mov	a,#0x04
+      0000A3 12r00r00         [24]  951 	lcall	__gptrput
+      0000A6 80 27            [24]  952 	sjmp	00105$
+      0000A8                        953 00104$:
+                                    954 ;	build/../max2771.c:54: inst->cs_pin   = CSN2_PIN;
+      0000A8 74 01            [12]  955 	mov	a,#0x01
+      0000AA 2D               [12]  956 	add	a, r5
+      0000AB FA               [12]  957 	mov	r2,a
+      0000AC E4               [12]  958 	clr	a
+      0000AD 3C               [12]  959 	addc	a, r4
+      0000AE FB               [12]  960 	mov	r3,a
+      0000AF 8E 07            [24]  961 	mov	ar7,r6
+      0000B1 8A 82            [24]  962 	mov	dpl,r2
+      0000B3 8B 83            [24]  963 	mov	dph,r3
+      0000B5 8F F0            [24]  964 	mov	b,r7
+      0000B7 74 01            [12]  965 	mov	a,#0x01
+      0000B9 12r00r00         [24]  966 	lcall	__gptrput
+                                    967 ;	build/../max2771.c:55: inst->stat_pin = STAT2_PIN;
+      0000BC 04               [12]  968 	inc	a
+      0000BD 2D               [12]  969 	add	a, r5
+      0000BE FA               [12]  970 	mov	r2,a
+      0000BF E4               [12]  971 	clr	a
+      0000C0 3C               [12]  972 	addc	a, r4
+      0000C1 FB               [12]  973 	mov	r3,a
+      0000C2 8E 07            [24]  974 	mov	ar7,r6
+      0000C4 8A 82            [24]  975 	mov	dpl,r2
+      0000C6 8B 83            [24]  976 	mov	dph,r3
+      0000C8 8F F0            [24]  977 	mov	b,r7
+      0000CA 74 05            [12]  978 	mov	a,#0x05
+      0000CC 12r00r00         [24]  979 	lcall	__gptrput
+      0000CF                        980 00105$:
+                                    981 ;	build/../max2771.c:58: board_d_init_output(inst->cs_pin);
+      0000CF 74 01            [12]  982 	mov	a,#0x01
+      0000D1 2D               [12]  983 	add	a, r5
+      0000D2 FA               [12]  984 	mov	r2,a
+      0000D3 E4               [12]  985 	clr	a
+      0000D4 3C               [12]  986 	addc	a, r4
+      0000D5 FB               [12]  987 	mov	r3,a
+      0000D6 8E 07            [24]  988 	mov	ar7,r6
+      0000D8 8A 82            [24]  989 	mov	dpl,r2
+      0000DA 8B 83            [24]  990 	mov	dph,r3
+      0000DC 8F F0            [24]  991 	mov	b,r7
+      0000DE 12r00r00         [24]  992 	lcall	__gptrget
+      0000E1 F5 82            [12]  993 	mov	dpl,a
+      0000E3 C0 07            [24]  994 	push	ar7
+      0000E5 C0 06            [24]  995 	push	ar6
+      0000E7 C0 05            [24]  996 	push	ar5
+      0000E9 C0 04            [24]  997 	push	ar4
+      0000EB C0 03            [24]  998 	push	ar3
+      0000ED C0 02            [24]  999 	push	ar2
+      0000EF 12r00r00         [24] 1000 	lcall	_board_d_init_output
+      0000F2 D0 02            [24] 1001 	pop	ar2
+      0000F4 D0 03            [24] 1002 	pop	ar3
+      0000F6 D0 04            [24] 1003 	pop	ar4
+      0000F8 D0 05            [24] 1004 	pop	ar5
+      0000FA D0 06            [24] 1005 	pop	ar6
+      0000FC D0 07            [24] 1006 	pop	ar7
+                                   1007 ;	build/../max2771.c:59: board_d_write(inst->cs_pin, PIN_HIGH);
+      0000FE 8A 82            [24] 1008 	mov	dpl,r2
+      000100 8B 83            [24] 1009 	mov	dph,r3
+      000102 8F F0            [24] 1010 	mov	b,r7
+      000104 12r00r00         [24] 1011 	lcall	__gptrget
+      000107 FA               [12] 1012 	mov	r2,a
+      000108 75*00 01         [24] 1013 	mov	_board_d_write_PARM_2,#0x01
+      00010B 8A 82            [24] 1014 	mov	dpl, r2
+      00010D C0 06            [24] 1015 	push	ar6
+      00010F C0 05            [24] 1016 	push	ar5
+      000111 C0 04            [24] 1017 	push	ar4
+      000113 12r00r00         [24] 1018 	lcall	_board_d_write
+      000116 D0 04            [24] 1019 	pop	ar4
+      000118 D0 05            [24] 1020 	pop	ar5
+      00011A D0 06            [24] 1021 	pop	ar6
+                                   1022 ;	build/../max2771.c:61: return inst;
+      00011C 8D 82            [24] 1023 	mov	dpl, r5
+      00011E 8C 83            [24] 1024 	mov	dph, r4
+      000120 8E F0            [24] 1025 	mov	b, r6
+                                   1026 ;	build/../max2771.c:62: }
+      000122 22               [24] 1027 	ret
+                                   1028 ;------------------------------------------------------------
+                                   1029 ;Allocation info for local variables in function 'max2771_destroy'
+                                   1030 ;------------------------------------------------------------
+                                   1031 ;handle        Allocated to registers 
+                                   1032 ;------------------------------------------------------------
+                                   1033 ;	build/../max2771.c:64: void max2771_destroy(max2771_handle_t handle) {
+                                   1034 ;	-----------------------------------------
+                                   1035 ;	 function max2771_destroy
+                                   1036 ;	-----------------------------------------
+      000123                       1037 _max2771_destroy:
+                                   1038 ;	build/../max2771.c:66: (void)handle;
+                                   1039 ;	build/../max2771.c:67: }
+      000123 22               [24] 1040 	ret
+                                   1041 ;------------------------------------------------------------
+                                   1042 ;Allocation info for local variables in function 'max2771_write_register'
+                                   1043 ;------------------------------------------------------------
+                                   1044 ;addr          Allocated with name '_max2771_write_register_PARM_2'
+                                   1045 ;value         Allocated with name '_max2771_write_register_PARM_3'
+                                   1046 ;handle        Allocated to registers r5 r6 r7 
+                                   1047 ;i             Allocated to registers r4 
+                                   1048 ;------------------------------------------------------------
+                                   1049 ;	build/../max2771.c:69: max2771_err_t max2771_write_register(max2771_handle_t handle, uint8_t addr, uint32_t value) {
+                                   1050 ;	-----------------------------------------
+                                   1051 ;	 function max2771_write_register
+                                   1052 ;	-----------------------------------------
+      000124                       1053 _max2771_write_register:
+      000124 AD 82            [24] 1054 	mov	r5, dpl
+      000126 AE 83            [24] 1055 	mov	r6, dph
+      000128 AF F0            [24] 1056 	mov	r7, b
+                                   1057 ;	build/../max2771.c:72: if (handle == NULL) return MAX2771_ERR_NULL_HANDLE;
+      00012A ED               [12] 1058 	mov	a,r5
+      00012B 4E               [12] 1059 	orl	a,r6
+      00012C 70 04            [24] 1060 	jnz	00102$
+      00012E 75 82 03         [24] 1061 	mov	dpl, #0x03
+      000131 22               [24] 1062 	ret
+      000132                       1063 00102$:
+                                   1064 ;	build/../max2771.c:73: if (addr >= MAX2771_MAX_REGISTERS) return MAX2771_ERR_INVALID_ADDR;
+      000132 74 F5            [12] 1065 	mov	a,#0x100 - 0x0b
+      000134 25*01            [12] 1066 	add	a,_max2771_write_register_PARM_2
+      000136 50 04            [24] 1067 	jnc	00104$
+      000138 75 82 02         [24] 1068 	mov	dpl, #0x02
+      00013B 22               [24] 1069 	ret
+      00013C                       1070 00104$:
+                                   1071 ;	build/../max2771.c:75: board_d_write(handle->cs_pin, PIN_LOW);
+      00013C 0D               [12] 1072 	inc	r5
+      00013D BD 00 01         [24] 1073 	cjne	r5,#0x00,00137$
+      000140 0E               [12] 1074 	inc	r6
+      000141                       1075 00137$:
+      000141 8D 82            [24] 1076 	mov	dpl,r5
+      000143 8E 83            [24] 1077 	mov	dph,r6
+      000145 8F F0            [24] 1078 	mov	b,r7
+      000147 12r00r00         [24] 1079 	lcall	__gptrget
+      00014A FC               [12] 1080 	mov	r4,a
+      00014B 75*00 00         [24] 1081 	mov	_board_d_write_PARM_2,#0x00
+      00014E 8C 82            [24] 1082 	mov	dpl, r4
+      000150 C0 07            [24] 1083 	push	ar7
+      000152 C0 06            [24] 1084 	push	ar6
+      000154 C0 05            [24] 1085 	push	ar5
+      000156 12r00r00         [24] 1086 	lcall	_board_d_write
+                                   1087 ;	build/../max2771.c:76: max2771_write_header(addr, 0);
+      000159 AB*01            [24] 1088 	mov	r3,_max2771_write_register_PARM_2
+      00015B 7C 00            [12] 1089 	mov	r4,#0x00
+      00015D 8C*00            [24] 1090 	mov	_max2771_write_header_PARM_2,r4
+      00015F 8B 82            [24] 1091 	mov	dpl, r3
+      000161 8C 83            [24] 1092 	mov	dph, r4
+      000163 12r00r00         [24] 1093 	lcall	_max2771_write_header
+      000166 D0 05            [24] 1094 	pop	ar5
+      000168 D0 06            [24] 1095 	pop	ar6
+      00016A D0 07            [24] 1096 	pop	ar7
+                                   1097 ;	build/../max2771.c:78: for (i = 31; i >= 0; i--) {
+      00016C 7C 1F            [12] 1098 	mov	r4,#0x1f
+      00016E                       1099 00106$:
+                                   1100 ;	build/../max2771.c:79: board_spi_write_bit((pin_state_t)((value >> i) & 1U));
+      00016E 8C F0            [24] 1101 	mov	b,r4
+      000170 05 F0            [12] 1102 	inc	b
+      000172 A8*02            [24] 1103 	mov	r0,_max2771_write_register_PARM_3
+      000174 A9*03            [24] 1104 	mov	r1,(_max2771_write_register_PARM_3 + 1)
+      000176 AA*04            [24] 1105 	mov	r2,(_max2771_write_register_PARM_3 + 2)
+      000178 AB*05            [24] 1106 	mov	r3,(_max2771_write_register_PARM_3 + 3)
+      00017A 80 0D            [24] 1107 	sjmp	00139$
+      00017C                       1108 00138$:
+      00017C C3               [12] 1109 	clr	c
+      00017D EB               [12] 1110 	mov	a,r3
+      00017E 13               [12] 1111 	rrc	a
+      00017F FB               [12] 1112 	mov	r3,a
+      000180 EA               [12] 1113 	mov	a,r2
+      000181 13               [12] 1114 	rrc	a
+      000182 FA               [12] 1115 	mov	r2,a
+      000183 E9               [12] 1116 	mov	a,r1
+      000184 13               [12] 1117 	rrc	a
+      000185 F9               [12] 1118 	mov	r1,a
+      000186 E8               [12] 1119 	mov	a,r0
+      000187 13               [12] 1120 	rrc	a
+      000188 F8               [12] 1121 	mov	r0,a
+      000189                       1122 00139$:
+      000189 D5 F0 F0         [24] 1123 	djnz	b,00138$
+      00018C E8               [12] 1124 	mov	a,r0
+      00018D 54 01            [12] 1125 	anl	a,#0x01
+      00018F F5 82            [12] 1126 	mov	dpl,a
+      000191 C0 07            [24] 1127 	push	ar7
+      000193 C0 06            [24] 1128 	push	ar6
+      000195 C0 05            [24] 1129 	push	ar5
+      000197 C0 04            [24] 1130 	push	ar4
+      000199 12r00r00         [24] 1131 	lcall	_board_spi_write_bit
+      00019C D0 04            [24] 1132 	pop	ar4
+      00019E D0 05            [24] 1133 	pop	ar5
+      0001A0 D0 06            [24] 1134 	pop	ar6
+      0001A2 D0 07            [24] 1135 	pop	ar7
+                                   1136 ;	build/../max2771.c:78: for (i = 31; i >= 0; i--) {
+      0001A4 1C               [12] 1137 	dec	r4
+      0001A5 EC               [12] 1138 	mov	a,r4
+      0001A6 30 E7 C5         [24] 1139 	jnb	acc.7,00106$
+                                   1140 ;	build/../max2771.c:82: board_d_write(handle->cs_pin, PIN_HIGH);
+      0001A9 8D 82            [24] 1141 	mov	dpl,r5
+      0001AB 8E 83            [24] 1142 	mov	dph,r6
+      0001AD 8F F0            [24] 1143 	mov	b,r7
+      0001AF 12r00r00         [24] 1144 	lcall	__gptrget
+      0001B2 FD               [12] 1145 	mov	r5,a
+      0001B3 75*00 01         [24] 1146 	mov	_board_d_write_PARM_2,#0x01
+      0001B6 8D 82            [24] 1147 	mov	dpl, r5
+      0001B8 12r00r00         [24] 1148 	lcall	_board_d_write
+                                   1149 ;	build/../max2771.c:83: return MAX2771_OK;
+      0001BB 75 82 00         [24] 1150 	mov	dpl, #0x00
+                                   1151 ;	build/../max2771.c:84: }
+      0001BE 22               [24] 1152 	ret
+                                   1153 ;------------------------------------------------------------
+                                   1154 ;Allocation info for local variables in function 'max2771_read_register'
+                                   1155 ;------------------------------------------------------------
+                                   1156 ;addr          Allocated with name '_max2771_read_register_PARM_2'
+                                   1157 ;out_value     Allocated with name '_max2771_read_register_PARM_3'
+                                   1158 ;handle        Allocated to registers r5 r6 r7 
+                                   1159 ;i             Allocated with name '_max2771_read_register_i_10000_37'
+                                   1160 ;val           Allocated with name '_max2771_read_register_val_10000_37'
+                                   1161 ;sloc0         Allocated with name '_max2771_read_register_sloc0_1_0'
+                                   1162 ;------------------------------------------------------------
+                                   1163 ;	build/../max2771.c:86: max2771_err_t max2771_read_register(max2771_handle_t handle, uint8_t addr, uint32_t* out_value) {
+                                   1164 ;	-----------------------------------------
+                                   1165 ;	 function max2771_read_register
+                                   1166 ;	-----------------------------------------
+      0001BF                       1167 _max2771_read_register:
+      0001BF AD 82            [24] 1168 	mov	r5, dpl
+      0001C1 AE 83            [24] 1169 	mov	r6, dph
+      0001C3 AF F0            [24] 1170 	mov	r7, b
+                                   1171 ;	build/../max2771.c:88: uint32_t val = 0;
+                                   1172 ;	build/../max2771.c:90: if (handle == NULL) return MAX2771_ERR_NULL_HANDLE;
+      0001C5 E4               [12] 1173 	clr	a
+      0001C6 F9               [12] 1174 	mov	r1,a
+      0001C7 FA               [12] 1175 	mov	r2,a
+      0001C8 FB               [12] 1176 	mov	r3,a
+      0001C9 FC               [12] 1177 	mov	r4,a
+      0001CA ED               [12] 1178 	mov	a,r5
+      0001CB 4E               [12] 1179 	orl	a,r6
+      0001CC 70 04            [24] 1180 	jnz	00102$
+      0001CE 75 82 03         [24] 1181 	mov	dpl, #0x03
+      0001D1 22               [24] 1182 	ret
+      0001D2                       1183 00102$:
+                                   1184 ;	build/../max2771.c:91: if (addr >= MAX2771_MAX_REGISTERS) return MAX2771_ERR_INVALID_ADDR;
+      0001D2 74 F5            [12] 1185 	mov	a,#0x100 - 0x0b
+      0001D4 25*06            [12] 1186 	add	a,_max2771_read_register_PARM_2
+      0001D6 50 04            [24] 1187 	jnc	00104$
+      0001D8 75 82 02         [24] 1188 	mov	dpl, #0x02
+      0001DB 22               [24] 1189 	ret
+      0001DC                       1190 00104$:
+                                   1191 ;	build/../max2771.c:92: if (out_value == NULL) return MAX2771_ERR_NULL_HANDLE;
+      0001DC E5*07            [12] 1192 	mov	a,_max2771_read_register_PARM_3
+      0001DE 45*08            [12] 1193 	orl	a,(_max2771_read_register_PARM_3 + 1)
+      0001E0 70 04            [24] 1194 	jnz	00106$
+      0001E2 75 82 03         [24] 1195 	mov	dpl, #0x03
+      0001E5 22               [24] 1196 	ret
+      0001E6                       1197 00106$:
+                                   1198 ;	build/../max2771.c:94: board_d_write(handle->cs_pin, PIN_LOW);
+      0001E6 C0 01            [24] 1199 	push	ar1
+      0001E8 C0 02            [24] 1200 	push	ar2
+      0001EA C0 03            [24] 1201 	push	ar3
+      0001EC C0 04            [24] 1202 	push	ar4
+      0001EE 74 01            [12] 1203 	mov	a,#0x01
+      0001F0 2D               [12] 1204 	add	a, r5
+      0001F1 F5*0F            [12] 1205 	mov	_max2771_read_register_sloc0_1_0,a
+      0001F3 E4               [12] 1206 	clr	a
+      0001F4 3E               [12] 1207 	addc	a, r6
+      0001F5 F5*10            [12] 1208 	mov	(_max2771_read_register_sloc0_1_0 + 1),a
+      0001F7 8F*11            [24] 1209 	mov	(_max2771_read_register_sloc0_1_0 + 2),r7
+      0001F9 85*0F 82         [24] 1210 	mov	dpl,_max2771_read_register_sloc0_1_0
+      0001FC 85*10 83         [24] 1211 	mov	dph,(_max2771_read_register_sloc0_1_0 + 1)
+      0001FF 85*11 F0         [24] 1212 	mov	b,(_max2771_read_register_sloc0_1_0 + 2)
+      000202 12r00r00         [24] 1213 	lcall	__gptrget
+      000205 F8               [12] 1214 	mov	r0,a
+      000206 75*00 00         [24] 1215 	mov	_board_d_write_PARM_2,#0x00
+      000209 88 82            [24] 1216 	mov	dpl, r0
+      00020B C0 04            [24] 1217 	push	ar4
+      00020D C0 03            [24] 1218 	push	ar3
+      00020F C0 02            [24] 1219 	push	ar2
+      000211 C0 01            [24] 1220 	push	ar1
+      000213 12r00r00         [24] 1221 	lcall	_board_d_write
+      000216 D0 01            [24] 1222 	pop	ar1
+      000218 D0 02            [24] 1223 	pop	ar2
+      00021A D0 03            [24] 1224 	pop	ar3
+      00021C D0 04            [24] 1225 	pop	ar4
+                                   1226 ;	build/../max2771.c:95: max2771_write_header(addr, 1);
+      00021E A8*06            [24] 1227 	mov	r0,_max2771_read_register_PARM_2
+      000220 7C 00            [12] 1228 	mov	r4,#0x00
+      000222 75*00 01         [24] 1229 	mov	_max2771_write_header_PARM_2,#0x01
+      000225 88 82            [24] 1230 	mov	dpl, r0
+      000227 8C 83            [24] 1231 	mov	dph, r4
+      000229 C0 04            [24] 1232 	push	ar4
+      00022B C0 03            [24] 1233 	push	ar3
+      00022D C0 02            [24] 1234 	push	ar2
+      00022F C0 01            [24] 1235 	push	ar1
+      000231 12r00r00         [24] 1236 	lcall	_max2771_write_header
+      000234 D0 01            [24] 1237 	pop	ar1
+      000236 D0 02            [24] 1238 	pop	ar2
+      000238 D0 03            [24] 1239 	pop	ar3
+      00023A D0 04            [24] 1240 	pop	ar4
+                                   1241 ;	build/../max2771.c:97: for (i = 31; i >= 0; i--) {
+      00023C 75*0A 1F         [24] 1242 	mov	_max2771_read_register_i_10000_37,#0x1f
+                                   1243 ;	build/../max2771.c:104: return MAX2771_OK;
+      00023F D0 04            [24] 1244 	pop	ar4
+      000241 D0 03            [24] 1245 	pop	ar3
+      000243 D0 02            [24] 1246 	pop	ar2
+      000245 D0 01            [24] 1247 	pop	ar1
+                                   1248 ;	build/../max2771.c:97: for (i = 31; i >= 0; i--) {
+      000247                       1249 00108$:
+                                   1250 ;	build/../max2771.c:98: val <<= 1;
+      000247 E9               [12] 1251 	mov	a,r1
+      000248 29               [12] 1252 	add	a,r1
+      000249 F5*0B            [12] 1253 	mov	_max2771_read_register_val_10000_37,a
+      00024B EA               [12] 1254 	mov	a,r2
+      00024C 33               [12] 1255 	rlc	a
+      00024D F5*0C            [12] 1256 	mov	(_max2771_read_register_val_10000_37 + 1),a
+      00024F EB               [12] 1257 	mov	a,r3
+      000250 33               [12] 1258 	rlc	a
+      000251 F5*0D            [12] 1259 	mov	(_max2771_read_register_val_10000_37 + 2),a
+      000253 EC               [12] 1260 	mov	a,r4
+      000254 33               [12] 1261 	rlc	a
+      000255 F5*0E            [12] 1262 	mov	(_max2771_read_register_val_10000_37 + 3),a
+                                   1263 ;	build/../max2771.c:99: val |= (board_spi_read_bit() == PIN_HIGH) ? 1U : 0U;
+      000257 12r00r00         [24] 1264 	lcall	_board_spi_read_bit
+      00025A E5 82            [12] 1265 	mov	a, dpl
+      00025C 60 02            [24] 1266 	jz	00112$
+      00025E 74 01            [12] 1267 	mov	a,#0x01
+      000260                       1268 00112$:
+      000260 F8               [12] 1269 	mov	r0,a
+      000261 E4               [12] 1270 	clr	a
+      000262 FD               [12] 1271 	mov	r5,a
+      000263 FE               [12] 1272 	mov	r6,a
+      000264 FF               [12] 1273 	mov	r7,a
+      000265 E8               [12] 1274 	mov	a,r0
+      000266 45*0B            [12] 1275 	orl	a,_max2771_read_register_val_10000_37
+      000268 F9               [12] 1276 	mov	r1,a
+      000269 ED               [12] 1277 	mov	a,r5
+      00026A 45*0C            [12] 1278 	orl	a,(_max2771_read_register_val_10000_37 + 1)
+      00026C FA               [12] 1279 	mov	r2,a
+      00026D EE               [12] 1280 	mov	a,r6
+      00026E 45*0D            [12] 1281 	orl	a,(_max2771_read_register_val_10000_37 + 2)
+      000270 FB               [12] 1282 	mov	r3,a
+      000271 EF               [12] 1283 	mov	a,r7
+      000272 45*0E            [12] 1284 	orl	a,(_max2771_read_register_val_10000_37 + 3)
+      000274 FC               [12] 1285 	mov	r4,a
+                                   1286 ;	build/../max2771.c:97: for (i = 31; i >= 0; i--) {
+      000275 15*0A            [12] 1287 	dec	_max2771_read_register_i_10000_37
+      000277 E5*0A            [12] 1288 	mov	a,_max2771_read_register_i_10000_37
+      000279 30 E7 CB         [24] 1289 	jnb	acc.7,00108$
+                                   1290 ;	build/../max2771.c:102: board_d_write(handle->cs_pin, PIN_HIGH);
+      00027C 85*0F 82         [24] 1291 	mov	dpl,_max2771_read_register_sloc0_1_0
+      00027F 85*10 83         [24] 1292 	mov	dph,(_max2771_read_register_sloc0_1_0 + 1)
+      000282 85*11 F0         [24] 1293 	mov	b,(_max2771_read_register_sloc0_1_0 + 2)
+      000285 12r00r00         [24] 1294 	lcall	__gptrget
+      000288 FF               [12] 1295 	mov	r7,a
+      000289 75*00 01         [24] 1296 	mov	_board_d_write_PARM_2,#0x01
+      00028C 8F 82            [24] 1297 	mov	dpl, r7
+      00028E C0 04            [24] 1298 	push	ar4
+      000290 C0 03            [24] 1299 	push	ar3
+      000292 C0 02            [24] 1300 	push	ar2
+      000294 C0 01            [24] 1301 	push	ar1
+      000296 12r00r00         [24] 1302 	lcall	_board_d_write
+      000299 D0 01            [24] 1303 	pop	ar1
+      00029B D0 02            [24] 1304 	pop	ar2
+      00029D D0 03            [24] 1305 	pop	ar3
+      00029F D0 04            [24] 1306 	pop	ar4
+                                   1307 ;	build/../max2771.c:103: *out_value = val;
+      0002A1 AD*07            [24] 1308 	mov	r5,_max2771_read_register_PARM_3
+      0002A3 AE*08            [24] 1309 	mov	r6,(_max2771_read_register_PARM_3 + 1)
+      0002A5 AF*09            [24] 1310 	mov	r7,(_max2771_read_register_PARM_3 + 2)
+      0002A7 8D 82            [24] 1311 	mov	dpl,r5
+      0002A9 8E 83            [24] 1312 	mov	dph,r6
+      0002AB 8F F0            [24] 1313 	mov	b,r7
+      0002AD E9               [12] 1314 	mov	a,r1
+      0002AE 12r00r00         [24] 1315 	lcall	__gptrput
+      0002B1 A3               [24] 1316 	inc	dptr
+      0002B2 EA               [12] 1317 	mov	a,r2
+      0002B3 12r00r00         [24] 1318 	lcall	__gptrput
+      0002B6 A3               [24] 1319 	inc	dptr
+      0002B7 EB               [12] 1320 	mov	a,r3
+      0002B8 12r00r00         [24] 1321 	lcall	__gptrput
+      0002BB A3               [24] 1322 	inc	dptr
+      0002BC EC               [12] 1323 	mov	a,r4
+      0002BD 12r00r00         [24] 1324 	lcall	__gptrput
+                                   1325 ;	build/../max2771.c:104: return MAX2771_OK;
+      0002C0 75 82 00         [24] 1326 	mov	dpl, #0x00
+                                   1327 ;	build/../max2771.c:105: }
+      0002C3 22               [24] 1328 	ret
+                                   1329 ;------------------------------------------------------------
+                                   1330 ;Allocation info for local variables in function 'max2771_load_defaults'
+                                   1331 ;------------------------------------------------------------
+                                   1332 ;handle        Allocated to registers r5 r6 r7 
+                                   1333 ;i             Allocated to registers r4 
+                                   1334 ;err           Allocated to registers r2 
+                                   1335 ;------------------------------------------------------------
+                                   1336 ;	build/../max2771.c:107: max2771_err_t max2771_load_defaults(max2771_handle_t handle) {
+                                   1337 ;	-----------------------------------------
+                                   1338 ;	 function max2771_load_defaults
+                                   1339 ;	-----------------------------------------
+      0002C4                       1340 _max2771_load_defaults:
+      0002C4 AD 82            [24] 1341 	mov	r5, dpl
+      0002C6 AE 83            [24] 1342 	mov	r6, dph
+      0002C8 AF F0            [24] 1343 	mov	r7, b
+                                   1344 ;	build/../max2771.c:111: if (handle == NULL) return MAX2771_ERR_NULL_HANDLE;
+      0002CA ED               [12] 1345 	mov	a,r5
+      0002CB 4E               [12] 1346 	orl	a,r6
+      0002CC 70 04            [24] 1347 	jnz	00112$
+      0002CE 75 82 03         [24] 1348 	mov	dpl, #0x03
+                                   1349 ;	build/../max2771.c:113: for (i = 0; i < MAX2771_MAX_REGISTERS; i++) {
+      0002D1 22               [24] 1350 	ret
+      0002D2                       1351 00112$:
+      0002D2 7C 00            [12] 1352 	mov	r4,#0x00
+      0002D4                       1353 00106$:
+                                   1354 ;	build/../max2771.c:114: err = max2771_write_register(handle, i, default_settings[handle->channel][i]);
+      0002D4 8D 01            [24] 1355 	mov	ar1,r5
+      0002D6 8E 02            [24] 1356 	mov	ar2,r6
+      0002D8 8F 03            [24] 1357 	mov	ar3,r7
+      0002DA 89 82            [24] 1358 	mov	dpl,r1
+      0002DC 8A 83            [24] 1359 	mov	dph,r2
+      0002DE 8B F0            [24] 1360 	mov	b,r3
+      0002E0 12r00r00         [24] 1361 	lcall	__gptrget
+      0002E3 75 F0 2C         [24] 1362 	mov	b,#0x2c
+      0002E6 A4               [48] 1363 	mul	ab
+      0002E7 24r00            [12] 1364 	add	a, #_default_settings
+      0002E9 FA               [12] 1365 	mov	r2,a
+      0002EA 74s00            [12] 1366 	mov	a,#(_default_settings >> 8)
+      0002EC 35 F0            [12] 1367 	addc	a, b
+      0002EE FB               [12] 1368 	mov	r3,a
+      0002EF EC               [12] 1369 	mov	a,r4
+      0002F0 2C               [12] 1370 	add	a,r4
+      0002F1 25 E0            [12] 1371 	add	a,acc
+      0002F3 2A               [12] 1372 	add	a, r2
+      0002F4 F5 82            [12] 1373 	mov	dpl,a
+      0002F6 E4               [12] 1374 	clr	a
+      0002F7 3B               [12] 1375 	addc	a, r3
+      0002F8 F5 83            [12] 1376 	mov	dph,a
+      0002FA E4               [12] 1377 	clr	a
+      0002FB 93               [24] 1378 	movc	a,@a+dptr
+      0002FC F5*02            [12] 1379 	mov	_max2771_write_register_PARM_3,a
+      0002FE A3               [24] 1380 	inc	dptr
+      0002FF E4               [12] 1381 	clr	a
+      000300 93               [24] 1382 	movc	a,@a+dptr
+      000301 F5*03            [12] 1383 	mov	(_max2771_write_register_PARM_3 + 1),a
+      000303 A3               [24] 1384 	inc	dptr
+      000304 E4               [12] 1385 	clr	a
+      000305 93               [24] 1386 	movc	a,@a+dptr
+      000306 F5*04            [12] 1387 	mov	(_max2771_write_register_PARM_3 + 2),a
+      000308 A3               [24] 1388 	inc	dptr
+      000309 E4               [12] 1389 	clr	a
+      00030A 93               [24] 1390 	movc	a,@a+dptr
+      00030B F5*05            [12] 1391 	mov	(_max2771_write_register_PARM_3 + 3),a
+      00030D 8C*01            [24] 1392 	mov	_max2771_write_register_PARM_2,r4
+      00030F 8D 82            [24] 1393 	mov	dpl, r5
+      000311 8E 83            [24] 1394 	mov	dph, r6
+      000313 8F F0            [24] 1395 	mov	b, r7
+      000315 C0 07            [24] 1396 	push	ar7
+      000317 C0 06            [24] 1397 	push	ar6
+      000319 C0 05            [24] 1398 	push	ar5
+      00031B C0 04            [24] 1399 	push	ar4
+      00031D 12r01r24         [24] 1400 	lcall	_max2771_write_register
+      000320 AB 82            [24] 1401 	mov	r3, dpl
+      000322 D0 04            [24] 1402 	pop	ar4
+      000324 D0 05            [24] 1403 	pop	ar5
+      000326 D0 06            [24] 1404 	pop	ar6
+      000328 D0 07            [24] 1405 	pop	ar7
+                                   1406 ;	build/../max2771.c:115: if (err != MAX2771_OK) return err;
+      00032A EB               [12] 1407 	mov	a,r3
+      00032B FA               [12] 1408 	mov	r2,a
+      00032C 60 03            [24] 1409 	jz	00107$
+      00032E 8A 82            [24] 1410 	mov	dpl, r2
+      000330 22               [24] 1411 	ret
+      000331                       1412 00107$:
+                                   1413 ;	build/../max2771.c:113: for (i = 0; i < MAX2771_MAX_REGISTERS; i++) {
+      000331 0C               [12] 1414 	inc	r4
+      000332 BC 0B 00         [24] 1415 	cjne	r4,#0x0b,00136$
+      000335                       1416 00136$:
+      000335 40 9D            [24] 1417 	jc	00106$
+                                   1418 ;	build/../max2771.c:117: return MAX2771_OK;
+      000337 75 82 00         [24] 1419 	mov	dpl, #0x00
+                                   1420 ;	build/../max2771.c:118: }
+      00033A 22               [24] 1421 	ret
+                                   1422 ;------------------------------------------------------------
+                                   1423 ;Allocation info for local variables in function 'max2771_apply_preset'
+                                   1424 ;------------------------------------------------------------
+                                   1425 ;reg_values    Allocated with name '_max2771_apply_preset_PARM_2'
+                                   1426 ;count         Allocated with name '_max2771_apply_preset_PARM_3'
+                                   1427 ;handle        Allocated to registers r5 r6 r7 
+                                   1428 ;i             Allocated to registers r4 
+                                   1429 ;err           Allocated to registers r2 
+                                   1430 ;------------------------------------------------------------
+                                   1431 ;	build/../max2771.c:120: max2771_err_t max2771_apply_preset(max2771_handle_t handle, const uint32_t* reg_values, uint8_t count) {
+                                   1432 ;	-----------------------------------------
+                                   1433 ;	 function max2771_apply_preset
+                                   1434 ;	-----------------------------------------
+      00033B                       1435 _max2771_apply_preset:
+      00033B AD 82            [24] 1436 	mov	r5, dpl
+      00033D AE 83            [24] 1437 	mov	r6, dph
+      00033F AF F0            [24] 1438 	mov	r7, b
+                                   1439 ;	build/../max2771.c:124: if (handle == NULL) return MAX2771_ERR_NULL_HANDLE;
+      000341 ED               [12] 1440 	mov	a,r5
+      000342 4E               [12] 1441 	orl	a,r6
+      000343 70 04            [24] 1442 	jnz	00102$
+      000345 75 82 03         [24] 1443 	mov	dpl, #0x03
+      000348 22               [24] 1444 	ret
+      000349                       1445 00102$:
+                                   1446 ;	build/../max2771.c:125: if (reg_values == NULL) return MAX2771_ERR_NULL_HANDLE;
+      000349 E5*12            [12] 1447 	mov	a,_max2771_apply_preset_PARM_2
+      00034B 45*13            [12] 1448 	orl	a,(_max2771_apply_preset_PARM_2 + 1)
+      00034D 70 04            [24] 1449 	jnz	00119$
+      00034F 75 82 03         [24] 1450 	mov	dpl, #0x03
+                                   1451 ;	build/../max2771.c:127: for (i = 0; i < count && i < MAX2771_MAX_REGISTERS; i++) {
+      000352 22               [24] 1452 	ret
+      000353                       1453 00119$:
+      000353 7C 00            [12] 1454 	mov	r4,#0x00
+      000355                       1455 00110$:
+      000355 C3               [12] 1456 	clr	c
+      000356 EC               [12] 1457 	mov	a,r4
+      000357 95*15            [12] 1458 	subb	a,_max2771_apply_preset_PARM_3
+      000359 50 58            [24] 1459 	jnc	00107$
+      00035B BC 0B 00         [24] 1460 	cjne	r4,#0x0b,00153$
+      00035E                       1461 00153$:
+      00035E 50 53            [24] 1462 	jnc	00107$
+                                   1463 ;	build/../max2771.c:128: err = max2771_write_register(handle, i, reg_values[i]);
+      000360 EC               [12] 1464 	mov	a,r4
+      000361 75 F0 04         [24] 1465 	mov	b,#0x04
+      000364 A4               [48] 1466 	mul	ab
+      000365 25*12            [12] 1467 	add	a, _max2771_apply_preset_PARM_2
+      000367 F9               [12] 1468 	mov	r1,a
+      000368 E5*13            [12] 1469 	mov	a,(_max2771_apply_preset_PARM_2 + 1)
+      00036A 35 F0            [12] 1470 	addc	a, b
+      00036C FA               [12] 1471 	mov	r2,a
+      00036D AB*14            [24] 1472 	mov	r3,(_max2771_apply_preset_PARM_2 + 2)
+      00036F 89 82            [24] 1473 	mov	dpl,r1
+      000371 8A 83            [24] 1474 	mov	dph,r2
+      000373 8B F0            [24] 1475 	mov	b,r3
+      000375 12r00r00         [24] 1476 	lcall	__gptrget
+      000378 F5*02            [12] 1477 	mov	_max2771_write_register_PARM_3,a
+      00037A A3               [24] 1478 	inc	dptr
+      00037B 12r00r00         [24] 1479 	lcall	__gptrget
+      00037E F5*03            [12] 1480 	mov	(_max2771_write_register_PARM_3 + 1),a
+      000380 A3               [24] 1481 	inc	dptr
+      000381 12r00r00         [24] 1482 	lcall	__gptrget
+      000384 F5*04            [12] 1483 	mov	(_max2771_write_register_PARM_3 + 2),a
+      000386 A3               [24] 1484 	inc	dptr
+      000387 12r00r00         [24] 1485 	lcall	__gptrget
+      00038A F5*05            [12] 1486 	mov	(_max2771_write_register_PARM_3 + 3),a
+      00038C 8C*01            [24] 1487 	mov	_max2771_write_register_PARM_2,r4
+      00038E 8D 82            [24] 1488 	mov	dpl, r5
+      000390 8E 83            [24] 1489 	mov	dph, r6
+      000392 8F F0            [24] 1490 	mov	b, r7
+      000394 C0 07            [24] 1491 	push	ar7
+      000396 C0 06            [24] 1492 	push	ar6
+      000398 C0 05            [24] 1493 	push	ar5
+      00039A C0 04            [24] 1494 	push	ar4
+      00039C 12r01r24         [24] 1495 	lcall	_max2771_write_register
+      00039F AB 82            [24] 1496 	mov	r3, dpl
+      0003A1 D0 04            [24] 1497 	pop	ar4
+      0003A3 D0 05            [24] 1498 	pop	ar5
+      0003A5 D0 06            [24] 1499 	pop	ar6
+      0003A7 D0 07            [24] 1500 	pop	ar7
+                                   1501 ;	build/../max2771.c:129: if (err != MAX2771_OK) return err;
+      0003A9 EB               [12] 1502 	mov	a,r3
+      0003AA FA               [12] 1503 	mov	r2,a
+      0003AB 60 03            [24] 1504 	jz	00111$
+      0003AD 8A 82            [24] 1505 	mov	dpl, r2
+      0003AF 22               [24] 1506 	ret
+      0003B0                       1507 00111$:
+                                   1508 ;	build/../max2771.c:127: for (i = 0; i < count && i < MAX2771_MAX_REGISTERS; i++) {
+      0003B0 0C               [12] 1509 	inc	r4
+      0003B1 80 A2            [24] 1510 	sjmp	00110$
+      0003B3                       1511 00107$:
+                                   1512 ;	build/../max2771.c:131: return MAX2771_OK;
+      0003B3 75 82 00         [24] 1513 	mov	dpl, #0x00
+                                   1514 ;	build/../max2771.c:132: }
+      0003B6 22               [24] 1515 	ret
+                                   1516 ;------------------------------------------------------------
+                                   1517 ;Allocation info for local variables in function 'max2771_get_lock_status'
+                                   1518 ;------------------------------------------------------------
+                                   1519 ;handle        Allocated to registers r5 r6 r7 
+                                   1520 ;------------------------------------------------------------
+                                   1521 ;	build/../max2771.c:134: pin_state_t max2771_get_lock_status(max2771_handle_t handle) {
+                                   1522 ;	-----------------------------------------
+                                   1523 ;	 function max2771_get_lock_status
+                                   1524 ;	-----------------------------------------
+      0003B7                       1525 _max2771_get_lock_status:
+      0003B7 AD 82            [24] 1526 	mov	r5, dpl
+      0003B9 AE 83            [24] 1527 	mov	r6, dph
+      0003BB AF F0            [24] 1528 	mov	r7, b
+                                   1529 ;	build/../max2771.c:135: if (handle == NULL) return PIN_LOW;
+      0003BD ED               [12] 1530 	mov	a,r5
+      0003BE 4E               [12] 1531 	orl	a,r6
+      0003BF 70 03            [24] 1532 	jnz	00102$
+      0003C1 F5 82            [12] 1533 	mov	dpl,a
+      0003C3 22               [24] 1534 	ret
+      0003C4                       1535 00102$:
+                                   1536 ;	build/../max2771.c:136: return board_d_read(handle->stat_pin);
+      0003C4 74 02            [12] 1537 	mov	a,#0x02
+      0003C6 2D               [12] 1538 	add	a, r5
+      0003C7 FD               [12] 1539 	mov	r5,a
+      0003C8 E4               [12] 1540 	clr	a
+      0003C9 3E               [12] 1541 	addc	a, r6
+      0003CA FE               [12] 1542 	mov	r6,a
+      0003CB 8D 82            [24] 1543 	mov	dpl,r5
+      0003CD 8E 83            [24] 1544 	mov	dph,r6
+      0003CF 8F F0            [24] 1545 	mov	b,r7
+      0003D1 12r00r00         [24] 1546 	lcall	__gptrget
+      0003D4 F5 82            [12] 1547 	mov	dpl,a
+                                   1548 ;	build/../max2771.c:137: }
+      0003D6 02r00r00         [24] 1549 	ljmp	_board_d_read
+                                   1550 	.area CSEG    (CODE)
+                                   1551 	.area CONST   (CODE)
+                                   1552 	.area CONST   (CODE)
+      000000                       1553 _default_settings:
+      000000 97 17 A4 BE           1554 	.byte #0x97, #0x17, #0xa4, #0xbe	; 3198424983
+      000004 88 02 55 28           1555 	.byte #0x88, #0x02, #0x55, #0x28	; 676659848
+      000008 DC 21 9F 0E           1556 	.byte #0xdc, #0x21, #0x9f, #0x0e	; 245309916
+      00000C 00 80 88 69           1557 	.byte #0x00, #0x80, #0x88, #0x69	; 1770553344
+      000010 08 20 08 00           1558 	.byte #0x08, #0x20, #0x08, #0x00	; 532488
+      000014 70 AE 47 06           1559 	.byte #0x70, #0xae, #0x47, #0x06	; 105361008
+      000018 00 00 00 08           1560 	.byte #0x00, #0x00, #0x00, #0x08	; 134217728
+      00001C 00 00 00 00           1561 	.byte #0x00, #0x00, #0x00, #0x00	; 0
+      000020 81 F2 E0 01           1562 	.byte #0x81, #0xf2, #0xe0, #0x01	; 31519361
+      000024 02 00 00 00           1563 	.byte #0x02, #0x00, #0x00, #0x00	; 2
+      000028 04 00 00 00           1564 	.byte #0x04, #0x00, #0x00, #0x00	; 4
+      00002C 19 A0 A4 BE           1565 	.byte #0x19, #0xa0, #0xa4, #0xbe	; 3198459929
+      000030 88 02 55 28           1566 	.byte #0x88, #0x02, #0x55, #0x28	; 676659848
+      000034 DC 31 9F 0E           1567 	.byte #0xdc, #0x31, #0x9f, #0x0e	; 245314012
+      000038 00 80 88 78           1568 	.byte #0x00, #0x80, #0x88, #0x78	; 2022211584
+      00003C 08 20 06 00           1569 	.byte #0x08, #0x20, #0x06, #0x00	; 401416
+      000040 70 CD 4C 00           1570 	.byte #0x70, #0xcd, #0x4c, #0x00	; 5033328
+      000044 00 00 00 08           1571 	.byte #0x00, #0x00, #0x00, #0x08	; 134217728
+      000048 00 00 00 10           1572 	.byte #0x00, #0x00, #0x00, #0x10	; 268435456
+      00004C 81 F2 E0 01           1573 	.byte #0x81, #0xf2, #0xe0, #0x01	; 31519361
+      000050 02 00 00 00           1574 	.byte #0x02, #0x00, #0x00, #0x00	; 2
+      000054 04 00 00 00           1575 	.byte #0x04, #0x00, #0x00, #0x00	; 4
+                                   1576 	.area CSEG    (CODE)
+                                   1577 	.area XINIT   (CODE)
+                                   1578 	.area CABS    (ABS,CODE)
