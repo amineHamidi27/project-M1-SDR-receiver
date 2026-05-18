@@ -53,9 +53,6 @@ python3 gps_acquisition.py <fichier.bin> [options]
 # Acquisition de tous les PRNs GPS (1-32), fs = 4 MHz, zero-IF
 python3 gps_acquisition.py data/gps_4mhz.bin -f 4
 
-# Fréquence d'échantillonnage 12 MHz avec IF à 4.092 MHz (réel)
-python3 gps_acquisition.py data/gps_12mhz.bin -f 12 -fi 4.092
-
 # Seulement les PRNs 6, 9, 17 et 19
 python3 gps_acquisition.py data/gps_4mhz.bin -f 4 -prn 6,9,17,19
 
@@ -136,10 +133,10 @@ python3 gps_acquisition_gra.py data/gps_4mhz.bin -f 4 --save figures/ --csv resu
 |:---:|---:|---:|---:|
 | 6 | +5000 | 38.8 | 0.59800 |
 | 9 | +5000 | 38.4 | 0.71250 |
-| **17** | **+191** | **43.3** | **0.35475** |
-| **19** | **+2046** | **43.7** | **0.14475** |
+| 17 | +191 | 43.3 | 0.35475 |
+| 19 | +2046 | 43.7 | 0.14475 |
 
-Seuil de détection : **37 dB-Hz**  
+Seuil de détection : 37 dB-Hz  
 Plancher de bruit : ~32–33 dB-Hz
 
 ---
