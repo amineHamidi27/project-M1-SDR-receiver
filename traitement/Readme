@@ -1,0 +1,187 @@
+# GPS L1 C/A Signal Acquisition — Standalone Python Scripts
+
+Acquisition des signaux GPS L1 C/A à partir de données IF brutes (fichiers `.bin`).  
+Scripts **100 % indépendants** — aucune bibliothèque PocketSDR requise.
+
+---
+
+## Prérequis
+
+```bash
+pip install numpy matplotlib
+```
+
+> Python 3.8.  
+
+---
+
+## Format du fichier d'entrée
+
+Le fichier `.bin` doit contenir des échantillons **int8** :
+
+| Mode | Description | Octets / échantillon |
+|---|---|---|
+| **IQ (zero-IF)** | I et Q entrelacés : `[I0, Q0, I1, Q1, ...]` | 2 |
+| **Réel (IF)** | Composante I uniquement : `[I0, I1, I2, ...]` | 1 |
+
+Le mode IQ est utilisé automatiquement quand la fréquence IF est 0 (option `-fi 0`).
+
+---
+
+## Utilisation — `gps_acquisition.py`
+
+### Syntaxe
+
+```bash
+python3 gps_acquisition.py <fichier.bin> [options]
+```
+
+### Options
+
+| Option | Description | Défaut |
+|---|---|---|
+| `-f MHz` | Fréquence d'échantillonnage | `4.0` |
+| `-fi MHz` | Fréquence IF (0 = zero-IF / IQ) | `0.0` |
+| `-prn` | Liste ou plage de PRN | `1-32` |
+| `-d Hz` | Recherche Doppler maximale | `5000` |
+| `-t ms` | Temps d'intégration non-cohérente | `10` |
+| `--csv FILE` | Sauvegarde des résultats en CSV | — |
+
+### Exemples
+
+```bash
+# Acquisition de tous les PRNs GPS (1-32), fs = 4 MHz, zero-IF
+python3 gps_acquisition.py data/gps_4mhz.bin -f 4
+
+# Fréquence d'échantillonnage 12 MHz avec IF à 4.092 MHz (réel)
+python3 gps_acquisition.py data/gps_12mhz.bin -f 12 -fi 4.092
+
+# Seulement les PRNs 6, 9, 17 et 19
+python3 gps_acquisition.py data/gps_4mhz.bin -f 4 -prn 6,9,17,19
+
+# Sauvegarde en CSV
+python3 gps_acquisition.py data/gps_4mhz.bin -f 4 --csv resultats.csv
+```
+
+### Sortie console
+
+```
+File     : gps_4mhz_1.bin
+fs       : 4.0 MHz  |  mode : IQ  |  N : 4000 samp/ms
+Doppler  : ±5000 Hz  (21 bins)  |  Integration : 10 ms  (10 periods)
+Samples  : 44000
+
+  PRN  6 : DOP=  +5000 Hz  C/N0= 38.8 dB-Hz  COFF=0.59800 ms  ◄ DETECTED
+  PRN  9 : DOP=  +5000 Hz  C/N0= 38.4 dB-Hz  COFF=0.71250 ms  ◄ DETECTED
+  PRN 17 : DOP=   +191 Hz  C/N0= 43.3 dB-Hz  COFF=0.35475 ms  ◄ DETECTED
+  PRN 19 : DOP=  +2046 Hz  C/N0= 43.7 dB-Hz  COFF=0.14475 ms  ◄ DETECTED
+  ...
+
+  Detected : 4 / 32
+```
+
+### Format CSV produit
+
+```csv
+PRN,Doppler_Hz,CN0_dBHz,CodeOffset_ms,Detected
+6,5000,38.8,0.59800,1
+9,5000,38.4,0.71250,1
+17,191,43.3,0.35475,1
+19,2046,43.7,0.14475,1
+...
+```
+
+---
+
+## Utilisation — `gps_acquisition_gra.py`
+
+Même options que `gps_acquisition.py` avec en plus :
+
+| Option | Description |
+|---|---|
+| `--save DIR` | Sauvegarde toutes les figures PNG (300 DPI) dans `DIR` |
+| `--noshow` | Ne pas afficher les figures (mode serveur / headless) |
+
+### Exemples
+
+```bash
+# Affichage interactif des figures
+python3 gps_acquisition_gra.py data/gps_4mhz.bin -f 4
+
+# Sauvegarde dans un dossier pour le rapport (sans affichage)
+python3 gps_acquisition_gra.py data/gps_4mhz.bin -f 4 --save figures/ --noshow
+
+# Avec export CSV en même temps
+python3 gps_acquisition_gra.py data/gps_4mhz.bin -f 4 --save figures/ --csv resultats.csv
+```
+
+### Figures générées
+
+| Fichier | Contenu |
+|---|---|
+| `fig_01_signal_psd.png` | Signal I/Q temporel + Densité Spectrale de Puissance |
+| `fig_02_cn0_bar.png` | Barchart C/N0 pour tous les PRNs avec seuil de détection |
+| `fig_03_prn06.png` | Carte d'acquisition 2D + pic de corrélation + profil Doppler — PRN 6 |
+| `fig_04_prn09.png` | Idem — PRN 9 |
+| `fig_05_prn17.png` | Idem — PRN 17 |
+| `fig_06_prn19.png` | Idem — PRN 19 |
+
+> Une figure de détail est automatiquement créée pour chaque satellite détecté (C/N0 ≥ seuil).
+
+---
+
+## Résultats — exemple sur `gps_4mhz_1.bin`
+
+| PRN | Doppler (Hz) | C/N0 (dB-Hz) | Code Offset (ms) |
+|:---:|---:|---:|---:|
+| 6 | +5000 | 38.8 | 0.59800 |
+| 9 | +5000 | 38.4 | 0.71250 |
+| **17** | **+191** | **43.3** | **0.35475** |
+| **19** | **+2046** | **43.7** | **0.14475** |
+
+Seuil de détection : **37 dB-Hz**  
+Plancher de bruit : ~32–33 dB-Hz
+
+---
+
+## Algorithme
+
+```
+Fichier .bin (int8 IQ)
+        │
+        ▼
+  Lecture & conversion complexe (I − jQ)
+        │
+        ▼  Pour chaque PRN (1-32)
+  Génération code C/A  (LFSR G1/G2, IS-GPS-200)
+        │
+        ▼
+  Corrélation FFT × grille Doppler (±5000 Hz, pas 500 Hz)
+  Intégration non-cohérente (10 × 1 ms)
+        │
+        ▼
+  Recherche du pic 2D  →  code offset + Doppler
+  Estimation C/N0  =  (P_pic / P_moy − 1) / T_code
+  Affinement Doppler  (interpolation parabolique)
+        │
+        ▼
+  Sortie : PRN | Doppler | C/N0 | Code offset
+```
+
+---
+
+## Détails techniques
+
+- **Génération de code** : registres LFSR G1/G2 selon IS-GPS-200, décalage G2 par `np.roll`
+- **Corrélation** : `IFFT( FFT(signal) × conj(FFT(code)) )` — complexité O(N log N)
+- **Convention IQ** : `I − jQ` (sortie front-end RF standard)
+- **Estimation C/N0** : méthode peak-to-mean — précision ±1 dB-Hz
+- **Doppler fin** : interpolation parabolique sur 3 bins autour du pic
+
+
+---
+
+## Licence
+
+Usage académique et pédagogique.  
+Référence standard : **IS-GPS-200** (Interface Specification, GPS L1 C/A).
